@@ -8,12 +8,12 @@
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
-import CryptoKit
+//import CryptoKit
 
 
 class AuthViewController: UIViewController, DataSourceProviderDelegate {
   var dataSourceProvider: DataSourceProvider<AuthProvider>!
-
+   
   override func loadView() {
     view = UITableView(frame: .zero, style: .insetGrouped)
   }
@@ -108,13 +108,17 @@ class AuthViewController: UIViewController, DataSourceProviderDelegate {
     dataSourceProvider.delegate = self
   }
 
-  private func configureNavigationBar() {
-    navigationItem.title = "Autentificare"
-    guard let navigationBar = navigationController?.navigationBar else { return }
-    navigationBar.prefersLargeTitles = true
-    navigationBar.titleTextAttributes = [.foregroundColor: UIColor.systemOrange]
-    navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.systemOrange]
-  }
+    private func configureNavigationBar() {
+        navigationItem.title = "Autentificare"
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = true
+        
+        let accentColor = UIColor(named: "AccentColor")
+        navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .systemRed]
+        navigationBar.largeTitleTextAttributes = [.foregroundColor: accentColor ?? .systemRed]
+    }
+
+
 
   private func transitionToUserViewController() {
     // UserViewController is at index 1 in the tabBarController.viewControllers array
@@ -127,5 +131,6 @@ class AuthViewController: UIViewController, DataSourceProviderDelegate {
 extension AuthViewController: LoginDelegate {
   public func loginDidOccur() {
     transitionToUserViewController()
+      
   }
 }

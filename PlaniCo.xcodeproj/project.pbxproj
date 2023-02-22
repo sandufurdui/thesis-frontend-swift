@@ -167,12 +167,12 @@
 		E6FFCE0229A5322000B4A718 /* PlaniCo */ = {
 			isa = PBXGroup;
 			children = (
-				E62F38CF29A545990031A6B9 /* Utility */,
-				E62F38C829A5451B0031A6B9 /* Models */,
 				E6FFCE0329A5322000B4A718 /* AppDelegate.swift */,
-				E62F38C329A542740031A6B9 /* Custom Views */,
-				E62F38BC29A540F20031A6B9 /* ViewControllers */,
 				E6FFCE0529A5322000B4A718 /* SceneDelegate.swift */,
+				E62F38BC29A540F20031A6B9 /* ViewControllers */,
+				E62F38C829A5451B0031A6B9 /* Models */,
+				E62F38C329A542740031A6B9 /* Custom Views */,
+				E62F38CF29A545990031A6B9 /* Utility */,
 				E6FFCE0929A5322000B4A718 /* Main.storyboard */,
 				E6FFCE0C29A5322100B4A718 /* Assets.xcassets */,
 				E6FFCE0E29A5322100B4A718 /* LaunchScreen.storyboard */,
@@ -468,6 +468,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -497,6 +498,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

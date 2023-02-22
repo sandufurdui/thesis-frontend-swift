@@ -5,22 +5,6 @@
 //  Created by Sandu Furdui on 21.02.2023.
 //
 
-
-
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import FirebaseAuth
 
 class UserViewController: UIViewController, DataSourceProviderDelegate {
@@ -35,8 +19,8 @@ class UserViewController: UIViewController, DataSourceProviderDelegate {
     set { _user = newValue }
   }
 
-  /// Init allows for injecting a `User` instance during UI Testing
-  /// - Parameter user: A Firebase User instance
+  // Init allows for injecting a `User` instance during UI Testing
+  // - Parameter user: A Firebase User instance
   init(_ user: User? = nil) {
     super.init(nibName: nil, bundle: nil)
     self.user = user
@@ -187,8 +171,10 @@ class UserViewController: UIViewController, DataSourceProviderDelegate {
     navigationItem.title = "Utilizator"
     guard let navigationBar = navigationController?.navigationBar else { return }
     navigationBar.prefersLargeTitles = true
-    navigationBar.titleTextAttributes = [.foregroundColor: UIColor.systemOrange]
-    navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.systemOrange]
+      // MARK: - systemOrange
+      let accentColor = UIColor(named: "AccentColor")
+      navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .systemRed]
+    navigationBar.largeTitleTextAttributes = [.foregroundColor: accentColor ?? .systemRed]
     navigationBar.addProfilePic(userImage)
   }
 

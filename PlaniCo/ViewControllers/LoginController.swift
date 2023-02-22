@@ -33,15 +33,19 @@ class LoginController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.setTitleColor(.label)
+      let accentColor = UIColor(named: "AccentColor")
+    navigationController?.setTitleColor(accentColor ?? .label)
   }
 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     view.endEditing(true)
-    navigationController?.setTitleColor(.systemOrange)
+//    setts the color of authentication page after going back from email auth
+    let accentColor = UIColor(named: "AccentColor")
+    navigationController?.setTitleColor(accentColor ?? .systemRed)
   }
 
+    
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     navigationController?.popViewController(animated: false)
@@ -83,23 +87,26 @@ class LoginController: UIViewController {
 
   // MARK: - UI Configuration
 
-  private func configureNavigationBar() {
-    navigationItem.title = "Welcome"
-    navigationItem.backBarButtonItem?.tintColor = .systemYellow
-    navigationController?.navigationBar.prefersLargeTitles = true
-  }
+    private func configureNavigationBar() {
+        navigationItem.title = "Bine ați venit"
+        let accentColor = UIColor(named: "AccentColor")
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .red]
+        navigationItem.backBarButtonItem?.tintColor = .systemYellow
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
 
   private func configureDelegatesAndHandlers() {
     loginView.emailTextField.delegate = self
     loginView.passwordTextField.delegate = self
     loginView.loginButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-    loginView.createAccountButton.addTarget(
-      self,
-      action: #selector(handleCreateAccount),
-      for: .touchUpInside
-    )
+      loginView.orLabel
+    loginView.createAccountButton.addTarget(self, action: #selector(handleCreateAccount), for: .touchUpInside )
   }
-
+    
+    
+    
+    
   override func viewWillTransition(to size: CGSize,
                                    with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)

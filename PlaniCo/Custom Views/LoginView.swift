@@ -5,23 +5,9 @@
 //  Created by Sandu Furdui on 21.02.2023.
 //
 
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import UIKit
 
-/// Login View presented when peforming Email & Password Login Flow
+// Login View presented when peforming Email & Password Login Flow
 class LoginView: UIView {
   var emailTextField: UITextField! {
     didSet {
@@ -40,11 +26,12 @@ class LoginView: UIView {
 
   lazy var loginButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Login", for: .normal)
+    button.setTitle("Autentifică-mă", for: .normal)
     button.setTitleColor(.white, for: .normal)
     button.setTitleColor(.highlightedLabel, for: .highlighted)
-    button.setBackgroundImage(UIColor.systemOrange.image, for: .normal)
-    button.setBackgroundImage(UIColor.systemOrange.highlighted.image, for: .highlighted)
+    let accentColor = UIColor(named: "AccentColor")
+    button.setBackgroundImage(accentColor?.image, for: .normal)
+    button.setBackgroundImage(accentColor?.highlighted.image, for: .highlighted)
     button.clipsToBounds = true
     button.layer.cornerRadius = 14
     return button
@@ -52,11 +39,20 @@ class LoginView: UIView {
 
   lazy var createAccountButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Create Account", for: .normal)
-    button.setTitleColor(.secondaryLabel, for: .normal)
+    let accentColor = UIColor(named: "AccentColor")
+    button.setTitle("Creează cont", for: .normal)
+    button.setTitleColor(accentColor ?? .secondaryLabel, for: .normal)
     button.setTitleColor(UIColor.secondaryLabel.highlighted, for: .highlighted)
     return button
   }()
+    
+    lazy var orLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Or"
+        label.textColor = .secondaryLabel
+        return label
+    }()
+
 
   convenience init() {
     self.init(frame: .zero)
@@ -73,6 +69,7 @@ class LoginView: UIView {
     setupEmailTextfield()
     setupPasswordTextField()
     setupLoginButton()
+    setupOrLabel()
     setupCreateAccountButton()
   }
 
@@ -115,7 +112,7 @@ class LoginView: UIView {
   }
 
   private func setupPasswordTextField() {
-    passwordTextField = textField(placeholder: "Password", symbolName: "lock.fill")
+    passwordTextField = textField(placeholder: "Parola", symbolName: "lock.fill")
     passwordTextField.translatesAutoresizingMaskIntoConstraints = false
     addSubview(passwordTextField)
     NSLayoutConstraint.activate([
@@ -155,13 +152,55 @@ class LoginView: UIView {
       loginButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 5),
     ])
   }
+    
+//    private func setupOrLabel() {
+//        let orLabel = UILabel()
+//        orLabel.text = "or"
+//        addSubview(orLabel)
+//        orLabel.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//          orLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+//          orLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 20),
+//        ])
+//      }
+    private func setupOrLabel() {
+        let orLabel = UILabel()
+        orLabel.text = "sau"
+        orLabel.textColor = .gray
+        
+        let leftLineView = UIView()
+        leftLineView.backgroundColor = .gray
+        leftLineView.translatesAutoresizingMaskIntoConstraints = false
+        leftLineView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        leftLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        let rightLineView = UIView()
+        rightLineView.backgroundColor = .gray
+        rightLineView.translatesAutoresizingMaskIntoConstraints = false
+        rightLineView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        rightLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [leftLineView, orLabel, rightLineView])
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .center
+        addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 20)
+        ])
+    }
+
+
+
 
   private func setupCreateAccountButton() {
     addSubview(createAccountButton)
     createAccountButton.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       createAccountButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-      createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 5),
+      createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 65),
     ])
   }
 
@@ -172,7 +211,9 @@ class LoginView: UIView {
     textfield.backgroundColor = .secondarySystemBackground
     textfield.layer.cornerRadius = 14
     textfield.placeholder = placeholder
-    textfield.tintColor = .systemOrange
+    // MARK: - systemOrange
+    let accentColor = UIColor(named: "AccentColor")
+    textfield.tintColor = accentColor ?? .systemOrange
     let symbol = UIImage(systemName: symbolName)
     textfield.setImage(symbol)
     return textfield

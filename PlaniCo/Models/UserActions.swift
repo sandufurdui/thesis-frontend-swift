@@ -11,10 +11,10 @@
 enum UserAction: String {
   case signOut = "Ieșire"
   case requestVerifyEmail = "Solicitați verificarea e-mailului"
-  case delete = "Ștergere"
+  case delete = "Șterge"
   case updateEmail = "Email"
   case updatePhotoURL = "Adresa URL a fotografiei"
     case updateDisplayName = "Numele de afișare"
-    case updatePassword = "Numar de telefon"
+case updatePassword = "Numar de telefon"
     case refreshUserInfo = "Reîmprospătează informațiile"
 }

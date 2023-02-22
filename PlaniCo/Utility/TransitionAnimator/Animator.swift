@@ -5,7 +5,6 @@
 //  Created by Sandu Furdui on 21.02.2023.
 //
 
-
 import UIKit
 
 class Animator: NSObject, UIViewControllerAnimatedTransitioning {

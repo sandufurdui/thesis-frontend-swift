@@ -45,16 +45,23 @@ extension User: DataSourceProvidable {
   private var actionSection: Section {
     let actionsRows = [
       Item(title: UserAction.refreshUserInfo.rawValue, textColor: .systemBlue),
-      Item(title: UserAction.signOut.rawValue, textColor: .systemBlue),
       Item(title: UserAction.requestVerifyEmail.rawValue, textColor: .systemBlue),
+      Item(title: UserAction.signOut.rawValue, textColor: .systemBlue),
 //      Item(title: UserAction.tokenRefresh.rawValue, textColor: .systemBlue),
-      Item(title: UserAction.delete.rawValue, textColor: .systemRed),
+//      Item(title: UserAction.delete.rawValue, textColor: .systemRed),
     ]
     return Section(headerDescription: "Acțiuni", items: actionsRows)
   }
+    private var deleteSection: Section {
+      let actionsRows = [
+        Item(title: UserAction.delete.rawValue, textColor: .systemRed),
+      ]
+        
+      return Section(headerDescription: "Șterge profilul", items: actionsRows)
+    }
 
   var sections: [Section] {
-    [infoSection, metaDataSection, otherSection, actionSection]
+    [infoSection, metaDataSection, otherSection, actionSection, deleteSection]
   }
 }
 
