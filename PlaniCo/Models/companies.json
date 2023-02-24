@@ -1,0 +1,160 @@
+{
+  "companies": [
+    {
+      "company_legal_name": "CLASALIM-LUX",
+      "company_type": "SRL",
+      "company_name": "Maicom",
+      "category": "clothing"
+    },
+    {
+      "category": "meal",
+      "company_type": "SRL",
+      "company_name": "Nr.1 Supermarket",
+      "company_legal_name": "47TH PARALLEL"
+    },
+    {
+      "category": "meal",
+      "company_type": "SRL",
+      "company_name": "Pegas",
+      "company_legal_name": "PEGAS"
+    },
+    {
+      "category": "restaurant",
+      "company_type": "SRL",
+      "company_name": "Trattoria",
+      "company_legal_name": "TRATTORIA"
+    },
+    {
+      "company_legal_name": "KAUFLAND",
+      "company_type": "SRL",
+      "company_name": "KAUFLAND",
+      "category": "meal"
+    },
+    {
+      "company_legal_name": "PRIMUNISTIL",
+      "company_type": "SRL",
+      "company_name": "Salamander",
+      "category": "clothing"
+    },
+    {
+      "company_legal_name": "LUKOIL-MOLDOVA",
+      "company_type": "SRL",
+      "company_name": "Lukoil",
+      "category": "gas"
+    },
+    {
+      "company_legal_name": "DATARIO",
+      "company_type": "SRL",
+      "company_name": "Vento",
+      "category": "gas"
+    },
+    {
+      "category": "meal",
+      "company_type": "SRL",
+      "company_name": "Nr.1 Supermarket",
+      "company_legal_name": "A.B.C. GURMANDIS"
+    },
+    {
+      "company_legal_name": "Uniresto Grup",
+      "company_type": "SRL",
+      "company_name": "Oliva",
+      "category": "restaurant"
+    },
+    {
+      "category": "meal",
+      "company_type": "SRL",
+      "company_name": "Linella",
+      "company_legal_name": "MOLDRETAIL GROUP"
+    },
+    {
+      "company_legal_name": "ALIMER-COMERT",
+      "company_type": "SRL",
+      "company_name": "Salat",
+      "category": "restaurant"
+    },
+    {
+      "company_legal_name": "TIREX PETROL",
+      "company_type": "SA",
+      "company_name": "Tirex",
+      "category": "gas"
+    },
+    {
+      "category": "gas",
+      "company_type": "SRL",
+      "company_name": "Bemol",
+      "company_legal_name": "BEMOL RETAIL"
+    },
+    {
+      "company_legal_name": "Dacia LV",
+      "company_type": "SA",
+      "company_name": "Jardi",
+      "category": "meal"
+    },
+    {
+      "category": "gas",
+      "company_type": "SRL",
+      "company_name": "Petrom",
+      "company_legal_name": "PETROM-MOLDOVA"
+    },
+    {
+      "company_legal_name": "STROPSA ALEXANDRA",
+      "company_type": "SRL",
+      "company_name": "La Mămuca",
+      "category": "panificatie"
+    },
+    {
+      "company_legal_name": "PARADIS",
+      "company_type": "SRL",
+      "company_name": "Paradis",
+      "category": "jewerly"
+    },
+    {
+      "company_legal_name": "MI PIACE WINE",
+      "company_type": "SRL",
+      "company_name": "Mi Piace",
+      "category": "restaurant"
+    },
+    {
+      "category": "meal",
+      "company_type": "SRL",
+      "company_name": "Pegas",
+      "company_legal_name": "PEGAS-RT"
+    },
+    {
+      "category": "gas",
+      "company_type": "SA",
+      "company_name": "Rompetrol",
+      "company_legal_name": "ROMPETROL MOLDOVA"
+    },
+    {
+      "category": "clothing",
+      "company_type": "SRL",
+      "company_name": "Terranova",
+      "company_legal_name": "TERRANOVA"
+    },
+    {
+      "category": "sweets",
+      "company_type": "SRL",
+      "company_name": "Dulcinela",
+      "company_legal_name": "MODEST BELLEVUE"
+    },
+    {
+      "company_legal_name": "IMENSITATE",
+      "company_type": "SRL",
+      "company_name": "Bonus",
+      "category": "meal"
+    },
+    {
+      "company_legal_name": "METRO CASH & CARRY MOLDOVA",
+      "company_type": "SRL",
+      "company_name": "Metro",
+      "category": "various"
+    },
+    {
+      "company_legal_name": "TRABO-PLUS",
+      "company_type": "SRL",
+      "company_name": "Andy's Pizza",
+      "category": "restaurant"
+    }
+  ]
+}

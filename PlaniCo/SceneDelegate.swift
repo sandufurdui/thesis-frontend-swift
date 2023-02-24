@@ -7,6 +7,7 @@
 
 
 import UIKit
+import SwiftUI
 import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -61,22 +62,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // MARK: - Private Helpers
     
-    private func configureControllers() {
-        authNavController.configureTabBar(
-            title: "Autentificare",
-            systemImageName: "person.crop.circle.fill.badge.plus"
-        )
-        homeNavController.configureTabBar(
-            title: "Acasă",
-            systemImageName: "house.fill"
-        )
-        addReceiptController.configureTabBar(
-            title: "Scan",
-            systemImageName: "plus.circle"
-        )
-        userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
-        tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
-    }
+        private func configureControllers() {
+            authNavController.configureTabBar(
+                title: "Autentificare",
+                systemImageName: "person.crop.circle.fill.badge.plus"
+            )
+            homeNavController.configureTabBar(
+                title: "Acasă",
+                systemImageName: "house.fill"
+            )
+            addReceiptController.configureTabBar(
+                title: "Scan",
+                systemImageName: "plus.circle"
+            )
+            userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
+            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
+        }
+    
+//    private func configureControllers() {
+//        authNavController.configureTabBar(
+//            title: "Autentificare",
+//            systemImageName: "person.crop.circle.fill.badge.plus"
+//        )
+//        homeNavController.configureTabBar(
+//            title: "Acasă",
+//            systemImageName: "house.fill"
+//        )
+//        addReceiptController.configureTabBar(
+//            title: "Scan",
+//            systemImageName: "plus.circle"
+//        )
+//        userNavController.configureTabBar(
+//            title: "Utilizator curent",
+//            systemImageName: "person.fill"
+//        )
+//        tabBarController.viewControllers = [authNavController, homeNavController, addReceiptController, userNavController]
+//    }
+    
+    
     
     private func updateNavBar(for user: User?) {
         if let _ = user {

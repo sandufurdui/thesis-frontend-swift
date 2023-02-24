@@ -25,7 +25,45 @@ class AddReceiptController: UIViewController {
         }
     }
 
-    
+    func updateFields(forCompanyName companyName: String) {
+        let record = [
+            ["company_legal_name": "CLASALIM-LUX",
+             "company_type": "SRL",
+             "company_name": "Maicom",
+             "category": "clothing"],
+            ["category": "meal",
+             "company_type": "SRL",
+             "company_name": "Nr.1 Supermarket",
+             "company_legal_name": "47TH PARALLEL"]
+        ]
+
+        // Iterate through your record to find a match for the selected company name
+        for company in record {
+            if company["company_name"] == companyName {
+                // If a match is found, update the fields with the corresponding values
+                if let legalName = company["company_legal_name"] {
+//                    alertController.textFields?[0].text = legalName
+                    print(company)
+                }
+                if let type = company["company_type"] {
+//                    alertController.textFields?[2].text = type
+                    print(company)
+                }
+                if let category = company["category"] {
+//                    alertController.textFields?[3].text = category
+                    print(company)
+                }
+                break
+            }
+        }
+    }
+
+    @objc func companyNameTextFieldDidChange(_ textField: UITextField) {
+        if let companyName = textField.text {
+            updateFields(forCompanyName: companyName)
+        }
+    }
+
     override func loadView() {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         let label = UILabel()
@@ -71,6 +109,7 @@ class AddReceiptController: UIViewController {
                     self.isRecognizing = false
                 }
                 .recognizeText() { recognizedText in
+                    //                https://thesis-backend-23143.onrender.com
                     let url = URL(string: "https://thesis-backend-23143.onrender.com/process_data")!
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
@@ -100,7 +139,6 @@ class AddReceiptController: UIViewController {
                             return
                         }
 
-
                         do {
                             let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                             guard let processedText = json["processed_text"] as? [String: Any] else {
@@ -112,159 +150,183 @@ class AddReceiptController: UIViewController {
                             var companyName = processedText["company_name"] as? String ?? ""
                             var companyType = processedText["company_type"] as? String ?? ""
                             var category = processedText["category"] as? String ?? ""
-                            var purchaseTotal = processedText["purchase_total"] ?? ""
-                            var purchaseDateTime = processedText["purchase_date_time"] ?? ""
+                            var purchaseTotal = processedText["purchase_total"] as? String ?? ""
+                            var purchaseDateTime = processedText["purchase_date_time"] as? String ?? ""
 
                             DispatchQueue.main.async {
+                                let alert = ReceiptAlert.createAlert(companyLegalName: companyLegalName, companyName: companyName, companyType: companyType, category: category, purchaseTotal: purchaseTotal, purchaseDateTime: purchaseDateTime)
+                                self.present(alert, animated: true)
 
-                                let alertController = UIAlertController(title: "Receipt details", message: "Please check if all the information displayed in this alert is veridic", preferredStyle: .alert)
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Company legal name:"
-                                    //                                    textField.keyboardType = .numberPad
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Company legal name"
-                                    textField.text = companyLegalName
-                                }
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Company name:"
-                                    //                                    textField.keyboardType = .numberPad
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Company name"
-                                    textField.text = companyName
-                                }
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Company type:"
-                                    //                                    textField.keyboardType = .numberPad
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Company type"
-                                    textField.text = companyType
-                                }
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Company category:"
-                                    //                                    textField.keyboardType = .numberPad
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Company category"
-                                    textField.text = category
-                                }
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Purchase total:"
-                                    //                                    textField.keyboardType = .numberPad
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Purchase total"
-                                    textField.keyboardType = .decimalPad
-                                    textField.text = "\(purchaseTotal)"
-                                }
-
-                                alertController.addTextField { (textField) -> Void in
-                                    textField.text = "Purchase date:"
-                                    textField.isUserInteractionEnabled = false
-                                }
-
-                                alertController.addTextField { textField in
-                                    textField.placeholder = "Purchase date"
-                                    textField.text = "\(purchaseDateTime)"
-                                    let datePicker = UIDatePicker()
-                                    datePicker.datePickerMode = .dateAndTime
-                                    datePicker.preferredDatePickerStyle = .wheels // Set the preferred style to wheels
-                                    datePicker.locale = Locale(identifier: "en_EN_POSIX")
-                                    datePicker.addTarget(self, action: #selector(self.datePickerValueChanged), for: .valueChanged)
-
-                                    textField.inputView = datePicker
-                                }
-
-                                if let textFields = alertController.textFields {
-                                    for i in 0..<textFields.count {
-                                        if i % 2 == 0 {
-                                            textFields[i].superview!.superview!.subviews[0].removeFromSuperview()
-                                            textFields[i].superview!.backgroundColor = UIColor.clear
-                                        }
-                                    }
-                                }
-
-                                let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-                                    companyLegalName = alertController.textFields?[1].text ?? ""
-                                    companyName = alertController.textFields?[3].text ?? ""
-                                    companyType = alertController.textFields?[5].text ?? ""
-                                    category = alertController.textFields?[7].text ?? ""
-                                    purchaseTotal = alertController.textFields?[9].text ?? ""
-                                    purchaseDateTime = alertController.textFields?[11].text ?? ""
-
-                                    guard let currentUser = Auth.auth().currentUser else { return }
-                                    let userId = currentUser.uid
-                                    let postPaycheckPayload: [String: Any] = [
-                                        "user_id": userId,
-                                        "company_legal_name": companyLegalName as Any,
-                                        "company_name": companyName as Any,
-                                        "company_type": companyType as Any,
-                                        "category": category as Any,
-                                        "scanned_date": purchaseDateTime as Any,
-                                        "purchase_date_time": purchaseDateTime as Any,
-                                        "purchase_total": purchaseTotal as Any
-                                    ]
-                                    guard let postPaycheckUrl = URL(string: "https://thesis-backend-23143.onrender.com/post_paycheck") else { return }
-                                    var postPaycheckRequest = URLRequest(url: postPaycheckUrl)
-                                    postPaycheckRequest.httpMethod = "POST"
-                                    postPaycheckRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                                    postPaycheckRequest.httpBody = try? JSONSerialization.data(withJSONObject: postPaycheckPayload)
-
-                                    URLSession.shared.dataTask(with: postPaycheckRequest) { (data, response, error) in
-                                        if let error = error {
-                                            let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                                            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-                                            self.present(alertController, animated: true)
-                                            return
-                                        }
-
-                                        guard let data = data else {
-                                            let alertController = UIAlertController(title: "Error", message: "No data received", preferredStyle: .alert)
-                                            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-                                            self.present(alertController, animated: true)
-                                            return
-                                        }
-
-                                        let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                                        //                                        print(json as Any)
-                                        DispatchQueue.main.async {
-                                            if let jsonData = try? JSONSerialization.data(withJSONObject: json ?? "{'message' : 'Error while parsing the response'}"),
-                                               let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-
-                                                let resultMessage = jsonDictionary["message"] as? String ?? "Error while parsing the response"
-                                                let alertController = UIAlertController(title: "Success", message: resultMessage, preferredStyle: .alert)
-                                                alertController.addAction(UIAlertAction(title: "OK", style: .default))
-                                                self.present(alertController, animated: true)
-                                            }
-                                        }
-
-                                    }.resume()
-                                }
-
-                                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-                                alertController.addAction(saveAction)
-                                alertController.addAction(cancelAction)
-
-                                self.present(alertController, animated: true, completion: nil)
-
+////                                let alertController = ReceiptAlert.createAlert(companyLegalName: companyLegalName, companyName: companyName, companyType: companyType, category: category, purchaseTotal: purchaseTotal, purchaseDateTime: purchaseDateTime) { _ in
+////                                        // Handle confirmation action
+////                                    }
+//                                let alertController = UIAlertController(title: "Receipt details", message: "Please confirm if all the information displayed in this alert is veridic", preferredStyle: .alert)
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Company legal name:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company legal name"
+////                                    textField.text = companyLegalName
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Company name:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+////                                alertController.addTextField { textField in
+////                                    textField.placeholder = "Company name"
+////                                    textField.text = companyName
+////                                }
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company name"
+//                                    textField.text = companyName
+//                                    textField.addTarget(self, action: #selector(self.companyNameTextFieldDidChange(_:)), for: .editingChanged)
+//                                }
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Company type:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company type"
+////                                    textField.text = companyType
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Company category:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company category"
+//                                    textField.text = category
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Purchase total:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Purchase total"
+//                                    textField.keyboardType = .decimalPad
+//                                    textField.text = "\(purchaseTotal)"
+//                                }
+//
+//                                alertController.addTextField { (textField) -> Void in
+//                                    textField.text = "Purchase date:"
+//                                    textField.isUserInteractionEnabled = false
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Purchase date"
+//                                    textField.text = "\(purchaseDateTime)"
+//                                    textField.tintColor = .clear // remove cursor
+//                                    let datePicker = UIDatePicker()
+//                                    datePicker.datePickerMode = .dateAndTime
+//                                    datePicker.preferredDatePickerStyle = .wheels // Set the preferred style to wheels
+//                                    datePicker.locale = Locale(identifier: "ro_RO_POSIX")
+//                                    datePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date()) // Set the minimum date to one year ago
+//                                    datePicker.maximumDate = Date() // Set the maximum date to today
+//                                    datePicker.addTarget(self, action: #selector(self.datePickerValueChanged), for: .valueChanged)
+//
+//                                    let dateFormatter = DateFormatter()
+//                                    dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+//                                    if let purchaseDate = dateFormatter.date(from: purchaseDateTime) {
+//                                        datePicker.date = purchaseDate
+//                                    } else {
+//                                        datePicker.date = Date()
+//                                    }
+//
+//                                    textField.inputView = datePicker
+//                                }
+//
+//
+//
+//                                if let textFields = alertController.textFields {
+//                                    for i in 0..<textFields.count {
+//                                        if i % 2 == 0 {
+//                                            textFields[i].superview!.superview!.subviews[0].removeFromSuperview()
+//                                            textFields[i].superview!.backgroundColor = UIColor.clear
+//                                        }
+//                                    }
+//                                }
+//
+//                                let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+//                                    companyLegalName = alertController.textFields?[1].text ?? ""
+//                                    companyName = alertController.textFields?[3].text ?? ""
+//                                    companyType = alertController.textFields?[5].text ?? ""
+//                                    category = alertController.textFields?[7].text ?? ""
+//                                    purchaseTotal = alertController.textFields?[9].text ?? ""
+//                                    purchaseDateTime = alertController.textFields?[11].text ?? ""
+//
+//                                    guard let currentUser = Auth.auth().currentUser else { return }
+//                                    let userId = currentUser.uid
+//                                    let postPaycheckPayload: [String: Any] = [
+//                                        "user_id": userId,
+//                                        "company_legal_name": companyLegalName as Any,
+//                                        "company_name": companyName as Any,
+//                                        "company_type": companyType as Any,
+//                                        "category": category as Any,
+//                                        "purchase_date_time": purchaseDateTime as Any,
+//                                        "purchase_total": purchaseTotal as Any
+//                                    ]
+//                                    guard let postPaycheckUrl = URL(string: "https://thesis-backend-23143.onrender.com/post_paycheck") else { return }
+//                                    var postPaycheckRequest = URLRequest(url: postPaycheckUrl)
+//                                    postPaycheckRequest.httpMethod = "POST"
+//                                    postPaycheckRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//                                    postPaycheckRequest.httpBody = try? JSONSerialization.data(withJSONObject: postPaycheckPayload)
+//
+//                                    URLSession.shared.dataTask(with: postPaycheckRequest) { (data, response, error) in
+//                                        if let error = error {
+//                                            let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+//                                            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+//                                            self.present(alertController, animated: true)
+//                                            return
+//                                        }
+//
+//                                        guard let data = data else {
+//                                            let alertController = UIAlertController(title: "Error", message: "No data received", preferredStyle: .alert)
+//                                            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+//                                            self.present(alertController, animated: true)
+//                                            return
+//                                        }
+//
+//                                        let json = try? JSONSerialization.jsonObject(with: data, options: [])
+//                                        DispatchQueue.main.async {
+//                                            if let jsonData = try? JSONSerialization.data(withJSONObject: json ?? "{'message' : 'Error while parsing the response'}"),
+//                                               let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+//
+//                                                let resultMessage = jsonDictionary["message"] as? String ?? "Error while parsing the response"
+//                                                let resultTitle = jsonDictionary["result"] as? String ?? "Error while parsing the response"
+//                                                let alertController = UIAlertController(title: resultTitle, message: resultMessage, preferredStyle: .alert)
+//                                                alertController.addAction(UIAlertAction(title: "OK", style: .default))
+//                                                self.present(alertController, animated: true)
+//                                            }
+//                                        }
+//
+//
+//                                    }.resume()
+//                                }
+//
+//                                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//                                alertController.addAction(saveAction)
+//                                alertController.addAction(cancelAction)
+//
+//                                self.present(alertController, animated: true, completion: nil)
+//
                             }
                         } catch {
                             print("Error decoding JSON: \(error.localizedDescription)")
@@ -293,6 +355,175 @@ class AddReceiptController: UIViewController {
         let scannerViewController = UIHostingController(rootView: scannerView)
         //        scannerViewController.modalPresentationStyle = .fullScreen
         present(scannerViewController, animated: true, completion: nil)
+
+
+
     }
 
 }
+//
+//import SwiftUI
+//import FirebaseAuth
+//
+//class AddReceiptController: UIViewController {
+//
+////...
+//
+//    func updateFields(forCompanyName companyName: String) {
+//        let record = [
+//            ["company_legal_name": "CLASALIM-LUX",
+//             "company_type": "SRL",
+//             "company_name": "Maicom",
+//             "category": "clothing"],
+//            ["category": "meal",
+//             "company_type": "SRL",
+//             "company_name": "Nr.1 Supermarket",
+//             "company_legal_name": "47TH PARALLEL"]
+//        ]
+//
+//        // Iterate through your record to find a match for the selected company name
+//        for company in record {
+//            if company["company_name"] == companyName {
+//                // If a match is found, update the fields with the corresponding values
+//                if let legalName = company["company_legal_name"] {
+//                    alertController.textFields?[0].text = legalName
+//                }
+//                if let type = company["company_type"] {
+//                    alertController.textFields?[2].text = type
+//                }
+//                if let category = company["category"] {
+//                    alertController.textFields?[3].text = category
+//                }
+//                break
+//            }
+//        }
+//    }
+//
+//    @objc func companyNameTextFieldDidChange(_ textField: UITextField) {
+//        if let companyName = textField.text {
+//            updateFields(forCompanyName: companyName)
+//        }
+//    }
+//
+//    override func loadView() {
+////...
+//    }
+//
+//
+//    @objc private func scanButtonTapped() {
+//        let scannerView = ScannerView { result in
+//            switch result {
+//            case .success(let scannedImages):
+//
+//                TextRecognition(scannedImages: scannedImages, recognizedContent: self.recognizedContent) {
+//
+//                    self.isRecognizing = false
+//                }
+//                .recognizeText() { recognizedText in
+//                    //...
+//
+//                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//
+//                        guard response.statusCode == 200 else {
+//                            DispatchQueue.main.async {
+//                                //...
+//
+//                            }
+//                            return
+//                        }
+//
+//                        do {
+//                            let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+//                            guard let processedText = json["processed_text"] as? [String: Any] else {
+//                                print("Error: Could not parse processed_text from JSON.")
+//                                return
+//                            }
+//
+//                            var companyLegalName = processedText["company_legal_name"] as? String ?? ""
+//                            var companyName = processedText["company_name"] as? String ?? ""
+//                            var companyType = processedText["company_type"] as? String ?? ""
+//                            var category = processedText["category"] as? String ?? ""
+//                            var purchaseTotal = processedText["purchase_total"] ?? ""
+//                            var purchaseDateTime = processedText["purchase_date_time"] as? String ?? ""
+//
+//                            DispatchQueue.main.async {
+//
+//                                let alertController = UIAlertController(title: "Receipt details", message: "Please confirm if all the information displayed in this alert is veridic", preferredStyle: .alert)
+//
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company legal name"
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company name"
+//                                    textField.text = companyName
+//                                    textField.addTarget(self, action: #selector(self.companyNameTextFieldDidChange(_:)), for: .editingChanged)
+//                                }
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company type"
+////                                    textField.text = companyType
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Company category"
+//                                    textField.text = category
+//                                    textField.isEnabled = false
+//                                    textField.textColor = .gray
+//                                }
+//
+//
+//                                alertController.addTextField { textField in
+//                                    textField.placeholder = "Purchase total"
+//                                    textField.keyboardType = .decimalPad
+//                                    textField.text = "\(purchaseTotal)"
+//                                }
+//
+//
+//                                alertController.addTextField { textField in
+//                                    //....
+//                                }
+//
+//                                //...
+//
+//                            }
+//                        } catch {
+//                            print("Error decoding JSON: \(error.localizedDescription)")
+//                        }
+//
+//                    }
+//
+//                    task.resume()
+//                }
+//                self.dismissScannerView()
+//
+//            case .failure(let error):
+//                let alert = UIAlertController(title: "Error",
+//                                              message: error.localizedDescription,
+//                                              preferredStyle: .alert)
+//                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                alert.addAction(okAction)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//        } didCancelScanning: {
+//            // Dismiss the scanner controller and the sheet.
+//            self.dismissScannerView()
+//            //            self.showScanner = false
+//        }
+//
+//        let scannerViewController = UIHostingController(rootView: scannerView)
+//        //        scannerViewController.modalPresentationStyle = .fullScreen
+//        present(scannerViewController, animated: true, completion: nil)
+//
+//
+//
+//    }
+//
+//}
