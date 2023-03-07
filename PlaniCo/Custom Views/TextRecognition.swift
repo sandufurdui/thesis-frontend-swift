@@ -5,15 +5,6 @@
 //  Created by Sandu Furdui on 22.02.2023.
 //
 
-import Foundation
-
-
-//
-//  TextRecognition.swift
-//  ScanAndRecognizeText
-//
-//  Created by Gabriel Theodoropoulos.
-//
 import UIKit
 import SwiftUI
 import Vision

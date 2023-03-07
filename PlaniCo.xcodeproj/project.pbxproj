@@ -29,6 +29,7 @@
 		E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */; };
 		E6C9DA6B29A6540B00A1EE36 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */; };
 		E6C9DA6D29A6543E00A1EE36 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6C29A6543E00A1EE36 /* Model.swift */; };
+		E6CC18B829A950370008E59A /* testController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CC18B729A950370008E59A /* testController.swift */; };
 		E6FFCE0429A5322000B4A718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFCE0329A5322000B4A718 /* AppDelegate.swift */; };
 		E6FFCE0629A5322000B4A718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFCE0529A5322000B4A718 /* SceneDelegate.swift */; };
 		E6FFCE0B29A5322000B4A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6FFCE0929A5322000B4A718 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanerView.swift; sourceTree = "<group>"; };
 		E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
 		E6C9DA6C29A6543E00A1EE36 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		E6CC18B729A950370008E59A /* testController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testController.swift; sourceTree = "<group>"; };
 		E6FFCE0029A5322000B4A718 /* PlaniCo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlaniCo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6FFCE0329A5322000B4A718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6FFCE0529A5322000B4A718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				E62F38C129A541FF0031A6B9 /* UserViewController.swift */,
 				E64A059B29A56AA3005B8119 /* HomeViewController.swift */,
 				E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */,
+				E6CC18B729A950370008E59A /* testController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				E600251129A7E12C003C91DC /* ReceiptAlert.swift in Sources */,
 				E62F38D129A545B20031A6B9 /* Extensions.swift in Sources */,
 				E62F38D329A545CC0031A6B9 /* LoginDelegate.swift in Sources */,
+				E6CC18B829A950370008E59A /* testController.swift in Sources */,
 				E62F38C029A541C00031A6B9 /* LoginController.swift in Sources */,
 				E62F38D629A545FC0031A6B9 /* DataSourceProvider.swift in Sources */,
 			);
@@ -486,7 +490,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F84U366KDU;
+				DEVELOPMENT_TEAM = A756CK2NQ3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlaniCo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -516,7 +520,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F84U366KDU;
+				DEVELOPMENT_TEAM = A756CK2NQ3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlaniCo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

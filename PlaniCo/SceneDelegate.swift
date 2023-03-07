@@ -12,7 +12,6 @@ import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
     lazy var authNavController: UINavigationController = {
         let navController = UINavigationController(rootViewController: AuthViewController())
         navController.view.backgroundColor = .systemBackground
@@ -27,6 +26,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var addReceiptController: UINavigationController = {
         let navController = UINavigationController(rootViewController: AddReceiptController())
+        navController.view.backgroundColor = .systemBackground
+        return navController
+    }() 
+    lazy var testController: UINavigationController = {
+        let navController = UINavigationController(rootViewController: TestController())
         navController.view.backgroundColor = .systemBackground
         return navController
     }()
@@ -75,36 +79,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 title: "Scan",
                 systemImageName: "plus.circle"
             )
+            testController.configureTabBar(
+                title: "test",
+                systemImageName: "plus.circle"
+            )
             userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
             tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
         }
     
-//    private func configureControllers() {
-//        authNavController.configureTabBar(
-//            title: "Autentificare",
-//            systemImageName: "person.crop.circle.fill.badge.plus"
-//        )
-//        homeNavController.configureTabBar(
-//            title: "Acasă",
-//            systemImageName: "house.fill"
-//        )
-//        addReceiptController.configureTabBar(
-//            title: "Scan",
-//            systemImageName: "plus.circle"
-//        )
-//        userNavController.configureTabBar(
-//            title: "Utilizator curent",
-//            systemImageName: "person.fill"
-//        )
-//        tabBarController.viewControllers = [authNavController, homeNavController, addReceiptController, userNavController]
-//    }
-    
-    
-    
     private func updateNavBar(for user: User?) {
         if let _ = user {
             // User is logged in
-            tabBarController.viewControllers = [homeNavController, addReceiptController, userNavController]
+            tabBarController.viewControllers = [
+//                testController,
+                homeNavController,
+                addReceiptController, userNavController]
         } else {
             // User is logged out
             tabBarController.viewControllers = [authNavController]

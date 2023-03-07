@@ -69,7 +69,7 @@
     <color key="tintColor" systemColor="systemOrangeColor"/>
     <resources>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.027450980392156862" blue="0.30980392156862746" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.090196078431372548" green="0.019607843137254902" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
