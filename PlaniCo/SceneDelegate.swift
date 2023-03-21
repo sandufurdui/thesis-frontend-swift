@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return navController
     }()
     
-    lazy var homeNavController: UINavigationController = {
-        let navController = UINavigationController(rootViewController: HomeViewController())
+    lazy var historyViewController: UINavigationController = {
+        let navController = UINavigationController(rootViewController: HistoryViewController())
         navController.view.backgroundColor = .systemBackground
         return navController
     }()
@@ -29,8 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navController.view.backgroundColor = .systemBackground
         return navController
     }() 
-    lazy var testController: UINavigationController = {
-        let navController = UINavigationController(rootViewController: TestController())
+    lazy var summaryController: UINavigationController = {
+        let navController = UINavigationController(rootViewController: SummaryController())
         navController.view.backgroundColor = .systemBackground
         return navController
     }()
@@ -71,28 +71,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 title: "Autentificare",
                 systemImageName: "person.crop.circle.fill.badge.plus"
             )
-            homeNavController.configureTabBar(
-                title: "Acasă",
-                systemImageName: "house.fill"
+            historyViewController.configureTabBar(
+                title: "Transactions",
+                systemImageName: "clock"
             )
             addReceiptController.configureTabBar(
                 title: "Scan",
                 systemImageName: "plus.circle"
             )
-            testController.configureTabBar(
+            summaryController.configureTabBar(
                 title: "test",
                 systemImageName: "plus.circle"
             )
             userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
-            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
+//            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
         }
     
     private func updateNavBar(for user: User?) {
         if let _ = user {
             // User is logged in
             tabBarController.viewControllers = [
-//                testController,
-                homeNavController,
+                summaryController,
+                historyViewController,
                 addReceiptController, userNavController]
         } else {
             // User is logged out

@@ -5,6 +5,10 @@ PODS:
   - AppAuth/Core (1.6.0)
   - AppAuth/ExternalUserAgent (1.6.0):
     - AppAuth/Core
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - Firebase/Auth (10.5.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.5.0)
@@ -45,14 +49,17 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.0)
   - PromisesObjC (2.2.0)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
+  - Charts
   - Firebase/Auth
   - GoogleSignIn
 
 SPEC REPOS:
   trunk:
     - AppAuth
+    - Charts
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -62,9 +69,11 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - PromisesObjC
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
   Firebase: 3d6637234ab163e31852834617b4fe1df3b7af6d
   FirebaseAuth: 1028326bcaa7a61391386e74b9078cc558ae14f1
   FirebaseCore: 324b8d182d9ff7e3f6d1fa2f04b082d1c7a3e366
@@ -74,7 +83,8 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: f38fb0081a17515ae9142282fd1a49dedaa8118c
+PODFILE CHECKSUM: 17729c9065483a5f426a3361fe8c31dd52ee866c
 
 COCOAPODS: 1.11.3

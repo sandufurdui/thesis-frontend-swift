@@ -8,7 +8,7 @@ target 'PlaniCo' do
   # Add the Firebase pod for Google Analytics
   # pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-
+  pod 'Charts'
   # Pods for Facebook
   # pod 'FBSDKLoginKit'
 

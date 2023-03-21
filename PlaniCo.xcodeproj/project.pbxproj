@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A5294FD52FA7B37C70FA7B9 /* Pods_PlaniCo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D03DD93D6E9A38DFBBF9522 /* Pods_PlaniCo.framework */; };
+		6FF046AE0BE9545667754F71 /* Pods_PlaniCo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057D320BD262432226996B7 /* Pods_PlaniCo.framework */; };
 		E600251129A7E12C003C91DC /* ReceiptAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E600251029A7E12C003C91DC /* ReceiptAlert.swift */; };
 		E600251329A8030A003C91DC /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = E600251229A8030A003C91DC /* companies.json */; };
 		E62F38BE29A541230031A6B9 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38BD29A541230031A6B9 /* AuthViewController.swift */; };
@@ -24,12 +24,12 @@
 		E62F38D829A546170031A6B9 /* DataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38D729A546170031A6B9 /* DataSourceProtocol.swift */; };
 		E62F38DB29A5463E0031A6B9 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38DA29A5463E0031A6B9 /* Animator.swift */; };
 		E62F38DF29A5485D0031A6B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */; };
-		E64A059C29A56AA3005B8119 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64A059B29A56AA3005B8119 /* HomeViewController.swift */; };
+		E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64A059B29A56AA3005B8119 /* HistoryViewController.swift */; };
 		E6C9DA6729A628ED00A1EE36 /* AddReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */; };
 		E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */; };
 		E6C9DA6B29A6540B00A1EE36 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */; };
 		E6C9DA6D29A6543E00A1EE36 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6C29A6543E00A1EE36 /* Model.swift */; };
-		E6CC18B829A950370008E59A /* testController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CC18B729A950370008E59A /* testController.swift */; };
+		E6CC18B829A950370008E59A /* SummaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CC18B729A950370008E59A /* SummaryController.swift */; };
 		E6FFCE0429A5322000B4A718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFCE0329A5322000B4A718 /* AppDelegate.swift */; };
 		E6FFCE0629A5322000B4A718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFCE0529A5322000B4A718 /* SceneDelegate.swift */; };
 		E6FFCE0B29A5322000B4A718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6FFCE0929A5322000B4A718 /* Main.storyboard */; };
@@ -38,9 +38,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D03DD93D6E9A38DFBBF9522 /* Pods_PlaniCo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaniCo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		44D82C9860D927FEBBDC7C21 /* Pods-PlaniCo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaniCo.debug.xcconfig"; path = "Target Support Files/Pods-PlaniCo/Pods-PlaniCo.debug.xcconfig"; sourceTree = "<group>"; };
-		A1B7A170F283223F02B58A63 /* Pods-PlaniCo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaniCo.release.xcconfig"; path = "Target Support Files/Pods-PlaniCo/Pods-PlaniCo.release.xcconfig"; sourceTree = "<group>"; };
+		3FB46EC8FC49A26245638C3B /* Pods-PlaniCo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaniCo.release.xcconfig"; path = "Target Support Files/Pods-PlaniCo/Pods-PlaniCo.release.xcconfig"; sourceTree = "<group>"; };
+		42C8F0A1964D77D77297D0DC /* Pods-PlaniCo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaniCo.debug.xcconfig"; path = "Target Support Files/Pods-PlaniCo/Pods-PlaniCo.debug.xcconfig"; sourceTree = "<group>"; };
+		A057D320BD262432226996B7 /* Pods_PlaniCo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaniCo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E600250F29A7D378003C91DC /* companies.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = companies.geojson; sourceTree = "<group>"; };
 		E600251029A7E12C003C91DC /* ReceiptAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptAlert.swift; sourceTree = "<group>"; };
 		E600251229A8030A003C91DC /* companies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = companies.json; sourceTree = "<group>"; };
@@ -58,12 +58,12 @@
 		E62F38D729A546170031A6B9 /* DataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceProtocol.swift; sourceTree = "<group>"; };
 		E62F38DA29A5463E0031A6B9 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PlaniCo/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E64A059B29A56AA3005B8119 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E64A059B29A56AA3005B8119 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptController.swift; sourceTree = "<group>"; };
 		E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanerView.swift; sourceTree = "<group>"; };
 		E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
 		E6C9DA6C29A6543E00A1EE36 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		E6CC18B729A950370008E59A /* testController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testController.swift; sourceTree = "<group>"; };
+		E6CC18B729A950370008E59A /* SummaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryController.swift; sourceTree = "<group>"; };
 		E6FFCE0029A5322000B4A718 /* PlaniCo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlaniCo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6FFCE0329A5322000B4A718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6FFCE0529A5322000B4A718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A5294FD52FA7B37C70FA7B9 /* Pods_PlaniCo.framework in Frameworks */,
+				6FF046AE0BE9545667754F71 /* Pods_PlaniCo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,16 +88,16 @@
 		3442FF94F54083359BDC81D3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				44D82C9860D927FEBBDC7C21 /* Pods-PlaniCo.debug.xcconfig */,
-				A1B7A170F283223F02B58A63 /* Pods-PlaniCo.release.xcconfig */,
+				42C8F0A1964D77D77297D0DC /* Pods-PlaniCo.debug.xcconfig */,
+				3FB46EC8FC49A26245638C3B /* Pods-PlaniCo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		8395D59D4F18E55532062926 /* Frameworks */ = {
+		DFE12E778442DA08FFD2119A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3D03DD93D6E9A38DFBBF9522 /* Pods_PlaniCo.framework */,
+				A057D320BD262432226996B7 /* Pods_PlaniCo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -108,9 +108,9 @@
 				E62F38BD29A541230031A6B9 /* AuthViewController.swift */,
 				E62F38BF29A541C00031A6B9 /* LoginController.swift */,
 				E62F38C129A541FF0031A6B9 /* UserViewController.swift */,
-				E64A059B29A56AA3005B8119 /* HomeViewController.swift */,
+				E64A059B29A56AA3005B8119 /* HistoryViewController.swift */,
 				E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */,
-				E6CC18B729A950370008E59A /* testController.swift */,
+				E6CC18B729A950370008E59A /* SummaryController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -175,7 +175,7 @@
 				E6FFCE0229A5322000B4A718 /* PlaniCo */,
 				E6FFCE0129A5322000B4A718 /* Products */,
 				3442FF94F54083359BDC81D3 /* Pods */,
-				8395D59D4F18E55532062926 /* Frameworks */,
+				DFE12E778442DA08FFD2119A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,11 +211,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6FFCE1429A5322100B4A718 /* Build configuration list for PBXNativeTarget "PlaniCo" */;
 			buildPhases = (
-				1300FCA7D359111F0FB51227 /* [CP] Check Pods Manifest.lock */,
+				12D4E14F1759202538351B99 /* [CP] Check Pods Manifest.lock */,
 				E6FFCDFC29A5322000B4A718 /* Sources */,
 				E6FFCDFD29A5322000B4A718 /* Frameworks */,
 				E6FFCDFE29A5322000B4A718 /* Resources */,
-				D655834F3094B94049391F89 /* [CP] Embed Pods Frameworks */,
+				D8CB49D570FAB3FEE6045E8F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,7 +275,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1300FCA7D359111F0FB51227 /* [CP] Check Pods Manifest.lock */ = {
+		12D4E14F1759202538351B99 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,7 +297,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D655834F3094B94049391F89 /* [CP] Embed Pods Frameworks */ = {
+		D8CB49D570FAB3FEE6045E8F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -335,12 +335,12 @@
 				E6FFCE0429A5322000B4A718 /* AppDelegate.swift in Sources */,
 				E6FFCE0629A5322000B4A718 /* SceneDelegate.swift in Sources */,
 				E62F38C729A542B60031A6B9 /* LoginView.swift in Sources */,
-				E64A059C29A56AA3005B8119 /* HomeViewController.swift in Sources */,
+				E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */,
 				E6C9DA6D29A6543E00A1EE36 /* Model.swift in Sources */,
 				E600251129A7E12C003C91DC /* ReceiptAlert.swift in Sources */,
 				E62F38D129A545B20031A6B9 /* Extensions.swift in Sources */,
 				E62F38D329A545CC0031A6B9 /* LoginDelegate.swift in Sources */,
-				E6CC18B829A950370008E59A /* testController.swift in Sources */,
+				E6CC18B829A950370008E59A /* SummaryController.swift in Sources */,
 				E62F38C029A541C00031A6B9 /* LoginController.swift in Sources */,
 				E62F38D629A545FC0031A6B9 /* DataSourceProvider.swift in Sources */,
 			);
@@ -484,7 +484,7 @@
 		};
 		E6FFCE1529A5322100B4A718 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44D82C9860D927FEBBDC7C21 /* Pods-PlaniCo.debug.xcconfig */;
+			baseConfigurationReference = 42C8F0A1964D77D77297D0DC /* Pods-PlaniCo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -514,7 +514,7 @@
 		};
 		E6FFCE1629A5322100B4A718 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1B7A170F283223F02B58A63 /* Pods-PlaniCo.release.xcconfig */;
+			baseConfigurationReference = 3FB46EC8FC49A26245638C3B /* Pods-PlaniCo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
