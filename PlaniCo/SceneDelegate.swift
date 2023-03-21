@@ -34,11 +34,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navController.view.backgroundColor = .systemBackground
         return navController
     }()
-    lazy var summaryController2: UINavigationController = {
-        let navController = UINavigationController(rootViewController: SummaryController2())
-        navController.view.backgroundColor = .systemBackground
-        return navController
-    }()
     
     lazy var userNavController: UINavigationController = {
         let navController = UINavigationController(rootViewController: UserViewController())
@@ -88,10 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 title: "Summary",
                 systemImageName: "house.fill"
             )
-            summaryController2.configureTabBar(
-                title: "Summary 2",
-                systemImageName: "house.fill"
-            )
+           
             userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
 //            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
         }
@@ -101,9 +93,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // User is logged in
             tabBarController.viewControllers = [
                 summaryController,
-                summaryController2,
+//                summaryController,
+                addReceiptController,
                 historyViewController,
-                addReceiptController, userNavController]
+                userNavController
+            ]
         } else {
             // User is logged out
             tabBarController.viewControllers = [authNavController]

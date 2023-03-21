@@ -91,7 +91,7 @@ class HistoryViewController: UIViewController {
         }
         task.resume()
     }
-
+    
 }
 
 // MARK: - LoginDelegate
@@ -111,24 +111,17 @@ extension HistoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
         var purchaseTotal = 0.0
         var companyName = ""
         var purchaseDateTimeString = ""
-//        var scannedDateString = ""
         var category = ""
-//        var companyLegalName = ""
-//        var companyType = ""
         
         if indexPath.row < items.count {
-             let item = items[indexPath.row]
-              purchaseTotal = item["purchase_total"] as? Double ?? 0.0
-              companyName = item["company_name"] as? String ?? ""
-              purchaseDateTimeString = item["purchase_date_time"] as? String ?? ""
-//              scannedDateString = item["scanned_date"] as? String ?? ""
-              category = item["category"] as? String ?? ""
-//              companyLegalName = item["company_legal_name"] as? String ?? ""
-//              companyType = item["company_type"] as? String ?? ""
+            let item = items[indexPath.row]
+            purchaseTotal = item["purchase_total"] as? Double ?? 0.0
+            companyName = item["company_name"] as? String ?? ""
+            purchaseDateTimeString = item["purchase_date_time"] as? String ?? ""
+            category = item["category"] as? String ?? ""
             var content = cell.defaultContentConfiguration()
             content.text = "\(companyName): \(purchaseTotal) lei"
             content.secondaryText = "\(category), \(purchaseDateTimeString)"
@@ -138,11 +131,6 @@ extension HistoryViewController: UITableViewDataSource {
         } else {
             print("Index out of range: \(indexPath.row)")
         }
-        
-//        let alert = UIAlertController(title: "Purchase Details", message: "\(companyName): \(purchaseTotal) lei\nCategory: \(category)\nDate: \(purchaseDateTimeString)", preferredStyle: .alert)
-//               alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//               present(alert, animated: true, completion: nil)
-        
         
         cell.detailTextLabel?.textColor = .gray
         cell.backgroundColor = .systemGray5
@@ -160,6 +148,4 @@ extension HistoryViewController: UITableViewDataSource {
         
         return cell
     }
- 
-    
 }

@@ -25,7 +25,6 @@
 		E62F38DB29A5463E0031A6B9 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38DA29A5463E0031A6B9 /* Animator.swift */; };
 		E62F38DF29A5485D0031A6B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */; };
 		E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64A059B29A56AA3005B8119 /* HistoryViewController.swift */; };
-		E676ECF429C95CE700ECD20E /* SummaryController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E676ECF329C95CE700ECD20E /* SummaryController2.swift */; };
 		E6C9DA6729A628ED00A1EE36 /* AddReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */; };
 		E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */; };
 		E6C9DA6B29A6540B00A1EE36 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */; };
@@ -60,7 +59,6 @@
 		E62F38DA29A5463E0031A6B9 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PlaniCo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E64A059B29A56AA3005B8119 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		E676ECF329C95CE700ECD20E /* SummaryController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryController2.swift; sourceTree = "<group>"; };
 		E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptController.swift; sourceTree = "<group>"; };
 		E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanerView.swift; sourceTree = "<group>"; };
 		E6C9DA6A29A6540B00A1EE36 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				E64A059B29A56AA3005B8119 /* HistoryViewController.swift */,
 				E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */,
 				E6CC18B729A950370008E59A /* SummaryController.swift */,
-				E676ECF329C95CE700ECD20E /* SummaryController2.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -333,7 +330,6 @@
 				E62F38C229A541FF0031A6B9 /* UserViewController.swift in Sources */,
 				E6C9DA6B29A6540B00A1EE36 /* TextRecognition.swift in Sources */,
 				E62F38CC29A5454E0031A6B9 /* UserActions.swift in Sources */,
-				E676ECF429C95CE700ECD20E /* SummaryController2.swift in Sources */,
 				E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */,
 				E62F38CE29A545680031A6B9 /* Section.swift in Sources */,
 				E6FFCE0429A5322000B4A718 /* AppDelegate.swift in Sources */,
