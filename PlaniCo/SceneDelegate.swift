@@ -34,7 +34,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navController.view.backgroundColor = .systemBackground
         return navController
     }()
-    
+    lazy var TestController: UINavigationController = {
+        let navController = UINavigationController(rootViewController: testController())
+        navController.view.backgroundColor = .systemBackground
+        return navController
+    }()
     lazy var userNavController: UINavigationController = {
         let navController = UINavigationController(rootViewController: UserViewController())
         navController.view.backgroundColor = .systemBackground
@@ -83,7 +87,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 title: "Summary",
                 systemImageName: "house.fill"
             )
-           
+            TestController.configureTabBar(
+                title: "testcontroller",
+                systemImageName: "house"
+            )
             userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
 //            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
         }
@@ -91,9 +98,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func updateNavBar(for user: User?) {
         if let _ = user {
             // User is logged in
+//            userNavController.setBarBackgroundColor(.red)
             tabBarController.viewControllers = [
+                
                 summaryController,
-//                summaryController,
+//                TestController,
                 addReceiptController,
                 historyViewController,
                 userNavController

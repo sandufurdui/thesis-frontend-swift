@@ -45,3 +45,24 @@ struct Item: Itemable {
     }
 }
 
+
+// Model object for a section in a tableview
+//struct summarySection: Sectionable {
+struct summarySection {
+    var items: [summaryItem]
+}
+
+// Model object for a cell in a tableview section
+struct summaryItem {
+    var title: String?
+    var detailTitle: String?
+    
+    
+    init(title: String? = nil,
+         detailTitle: String? = nil,
+         textColor: UIColor? = .label) {
+        self.title = title
+        self.detailTitle = detailTitle
+    }
+}
+

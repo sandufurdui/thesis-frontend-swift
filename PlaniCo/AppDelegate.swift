@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureApplicationAppearance() {
         let accentColor = UIColor(named: "AccentColor")
         UINavigationBar.appearance().tintColor = accentColor ?? .systemOrange
+        UITabBar.appearance().backgroundColor = .systemBackground
         UITabBar.appearance().tintColor = accentColor ?? .systemOrange
     }
     
