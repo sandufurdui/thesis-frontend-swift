@@ -62,6 +62,7 @@ class HistoryViewController: UIViewController {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
                 if let dict = json as? [String: Any], let data = dict["data"] {
+                    
                     self.items = data as! [[String : Any]]
                     
                     // Sort items by purchase date
