@@ -183,6 +183,65 @@ extension UINavigationBar: UserDisplayable {
             imageView.widthAnchor.constraint(equalToConstant: length),
         ])
     }
+    
+    func addHomeProfilePic(_ imageView: UIImageView, titleLabel: UILabel, subtitleLabel: UILabel) {
+        let length = frame.height * 0.7
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = length / 2
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        subtitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        subtitleLabel.textColor = .gray
+        
+        addSubview(imageView)
+        addSubview(titleLabel)
+        addSubview(subtitleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            imageView.heightAnchor.constraint(equalToConstant: length),
+            imageView.widthAnchor.constraint(equalToConstant: length),
+            
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(length + 48)),
+            
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(length + 48)),
+        ])
+    }
+
+    func addUserGreeting(_ titleLabel: UILabel, subtitleLabel: UILabel) {
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        subtitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        subtitleLabel.textColor = .gray
+        
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(subtitleLabel)
+        
+        addSubview(containerView)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+        ])
+    }
+
+
 }
 
 // MARK: Extending UITabBarController to work with custom transition animator

@@ -35,10 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - systemOrange
     private func configureApplicationAppearance() {
-        let accentColor = UIColor(named: "AccentColor")
-        UINavigationBar.appearance().tintColor = accentColor ?? .systemOrange
-        UITabBar.appearance().backgroundColor = .systemBackground
-        UITabBar.appearance().tintColor = accentColor ?? .systemOrange
+        let accentColor = UIColor(named: "NavbarBackgroundColor")
+        let accentColor1 = UIColor(named: "ReversedBackgroundColorSet")
+        
+//        UINavigationBar.appearance().tintColor = accentColor ?? .systemOrange
+        UITabBar.appearance().backgroundColor = accentColor 
+        UITabBar.appearance().tintColor = accentColor1
     }
     
     

@@ -101,6 +101,9 @@ class UserViewController: UIViewController, DataSourceProviderDelegate {
         user?.sendEmailVerification { error in
             guard error == nil else { return self.displayError(error) }
             print("Verification email sent!")
+            let alert = UIAlertController(title: "Verify email", message: "Verification email sent!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

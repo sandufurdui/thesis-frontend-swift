@@ -12,50 +12,55 @@ import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    let accentColor = UIColor(named: "BackgroundColorSet")
+    
     lazy var authNavController: UINavigationController = {
         let navController = UINavigationController(rootViewController: AuthViewController())
-        navController.view.backgroundColor = .systemBackground
+        navController.view.backgroundColor = accentColor
         return navController
     }()
     
     lazy var historyViewController: UINavigationController = {
         let navController = UINavigationController(rootViewController: HistoryViewController())
-        navController.view.backgroundColor = .systemBackground
+        navController.view.backgroundColor = accentColor
         return navController
     }()
     
     lazy var addReceiptController: UINavigationController = {
         let navController = UINavigationController(rootViewController: AddReceiptController())
-        navController.view.backgroundColor = .systemBackground
+        navController.view.backgroundColor = accentColor
         return navController
     }() 
     lazy var summaryController: UINavigationController = {
         let navController = UINavigationController(rootViewController: SummaryController())
-        navController.view.backgroundColor = .systemBackground
+        
+        navController.view.backgroundColor = accentColor
         return navController
     }()
     lazy var TestController: UINavigationController = {
         let navController = UINavigationController(rootViewController: testController())
-        navController.view.backgroundColor = .systemBackground
+        navController.view.backgroundColor = accentColor
         return navController
     }()
     lazy var userNavController: UINavigationController = {
         let navController = UINavigationController(rootViewController: UserViewController())
-        navController.view.backgroundColor = .systemBackground
+        navController.view.backgroundColor = accentColor
         return navController
     }()
     
     lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.delegate = tabBarController
-        tabBarController.view.backgroundColor = .systemBackground
+        tabBarController.view.backgroundColor = accentColor
         return tabBarController
     }()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
+//        UINavigationBar.appearance().barTintColor = .red
+//        UINavigationBar.appearance().barTintColor = UIColor(named: "MyNavBarColor")
+
         configureControllers()
         
         window = UIWindow(windowScene: windowScene)
@@ -96,13 +101,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     
     private func updateNavBar(for user: User?) {
+        
         if let _ = user {
             // User is logged in
 //            userNavController.setBarBackgroundColor(.red)
             tabBarController.viewControllers = [
                 
                 summaryController,
-//                TestController,
+                TestController,
                 addReceiptController,
                 historyViewController,
                 userNavController
