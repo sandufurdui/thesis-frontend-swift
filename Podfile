@@ -9,6 +9,7 @@ target 'PlaniCo' do
   # pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Charts'
+#  pod 'SwiftyMenu'
   # Pods for Facebook
   # pod 'FBSDKLoginKit'
 

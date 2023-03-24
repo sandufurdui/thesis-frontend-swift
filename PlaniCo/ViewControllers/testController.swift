@@ -5,13 +5,14 @@
 //  Created by Sandu Furdui on 22.03.2023.
 //
 
-
 import FirebaseAuth
 import UIKit
-import Charts
+import Charts 
+//import SwiftyMenu
 
 class testController: UIViewController {
-    //    var userImage = UIImageView(systemImageName: "person.circle.fill", tintColor: .secondaryLabel)
+
+    
     let accentColor = UIColor(named: "SecondaryTextColor")
     let accentColor1 = UIColor(named: "ReversedBackgroundColorSet")
     let boxBackgroundColor = UIColor(named: "BoxBackgroundColor")
@@ -28,9 +29,8 @@ class testController: UIViewController {
                        "color10": UIColor(named: "chartColors/sienna"),
                        "color11": UIColor(named: "chartColors/slateBlue"),
                        "color12": UIColor(named: "chartColors/stoneGrey"),
-                       "color12": UIColor(named: "chartColors/yellow")]
+                       "color13": UIColor(named: "chartColors/yellow")]
 
-    
     let userImage: UIImageView = {
         let imageView = UIImageView(systemImageName: "person.circle.fill", tintColor: .secondaryLabel)
         return imageView
@@ -62,13 +62,61 @@ class testController: UIViewController {
         userImage.setImage(from: photoURL)
     }
     
+    let anticipated = 120
+    let income = 100
     @objc private func settingsButtonTapped() {
         print("settings tapped")
+        let alert = UIAlertController(title: "Settings", message: "will present settings :)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func refreshButtonTapped() {
         print("refreshButtonTapped tapped")
+        let alert = UIAlertController(title: "Refresh", message: "refreshed :)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
     }
+    
+    @objc private func addIncomeTapped(income: Int) {
+        print("refreshButtonTapped tapped")
+        let alert = UIAlertController(title: "Add income", message: "Please input the income.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+            // Handle adding new spending here
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
+    
+    @objc private func addAnticipatedTapped() {
+        print("refreshButtonTapped tapped")
+        if anticipated == 0 {
+            let alert = UIAlertController(title: "Add Anticipated", message: "Please input the sum you want to spend this month. \nPlease note that you can add only once a month and you will not be able to edit it ", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+                // Handle adding new spending here
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Anticipated is already addded", message: "The anticipated spending is already added for this month and is set to \(anticipated) lei. \nYou can set one only once a month.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    @objc private func addSpendingTapped() {
+        print("refreshButtonTapped tapped")
+        
+        let alert = UIAlertController(title: "Add Spending", message: "Do you want to add a new spending?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+            // Handle adding new spending here
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,20 +129,93 @@ class testController: UIViewController {
         createBalanceView()
         createHotButtons()
         createSeparator()
+        createChartSummary()
+    }
+    
+    let chartSummaryStack = UIStackView()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    let currentMonthLabel = UILabel()
+    func createChartSummary() {
+        chartSummaryStack.backgroundColor = boxBackgroundColor
+        chartSummaryStack.layer.cornerRadius = 10
+        chartSummaryStack.layer.cornerCurve = .continuous
+        
+        // Add label to top left corner
+        let label = UILabel()
+        label.text = "Operations"
+        label.textColor = accentColor1
+        label.font = UIFont.systemFont(ofSize: view.frame.height / 50, weight: .medium)
+        chartSummaryStack.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16).isActive = true
+        label.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 24).isActive = true
+        
+        // Add label to top left corner
+        let spentText = UILabel()
+        spentText.text = "2157. lei"
+        spentText.textColor = accentColor1
+        spentText.font = UIFont.systemFont(ofSize: view.frame.height / 35, weight: .medium)
+        chartSummaryStack.addSubview(spentText)
+        spentText.translatesAutoresizingMaskIntoConstraints = false
+        spentText.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: view.frame.height / 50 + 48).isActive = true
+        spentText.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16).isActive = true
+        
+        // Add label to top left corner
+        let spentText2 = UILabel()
+        spentText2.text = "spent in March"
+        spentText2.textColor = accentColor
+        spentText2.font = UIFont.systemFont(ofSize: view.frame.height / 60, weight: .medium)
+        chartSummaryStack.addSubview(spentText2)
+        spentText2.translatesAutoresizingMaskIntoConstraints = false
+        spentText2.bottomAnchor.constraint(equalTo: spentText.bottomAnchor, constant: -2).isActive = true
+        spentText2.leadingAnchor.constraint(equalTo: spentText.trailingAnchor, constant: 5).isActive = true
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            
+            // Add chart summary stack to view
+            view.addSubview(chartSummaryStack)
+            chartSummaryStack.translatesAutoresizingMaskIntoConstraints = false
+            chartSummaryStack.heightAnchor.constraint(equalToConstant: 200).isActive = true
+            chartSummaryStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+            chartSummaryStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+            chartSummaryStack.topAnchor.constraint(equalTo: hotButtonsStack.bottomAnchor, constant: 30).isActive = true
+            
         
     }
-    let separator = UIView()
-    func createSeparator(){
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = separatorColor
-        view.addSubview(separator)
-        
-        // Add constraints to position the separator within the stack view
-        separator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        separator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        separator.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 15).isActive = true
-    }
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     
     let hotButtonsStack = UIStackView()
     func createHotButtons(){
@@ -150,7 +271,7 @@ class testController: UIViewController {
             label.leadingAnchor.constraint(equalTo: button1.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: button1.trailingAnchor)
         ])
-        button1.addTarget(self, action: #selector(lllll), for: .touchUpInside)
+        button1.addTarget(self, action: #selector(addIncomeTapped), for: .touchUpInside)
 
 
 
@@ -183,7 +304,7 @@ class testController: UIViewController {
             label2.leadingAnchor.constraint(equalTo: button2.leadingAnchor),
             label2.trailingAnchor.constraint(equalTo: button2.trailingAnchor)
         ])
-        button2.addTarget(self, action: #selector(lllll), for: .touchUpInside)
+        button2.addTarget(self, action: #selector(addAnticipatedTapped), for: .touchUpInside)
         
         
         
@@ -236,7 +357,7 @@ class testController: UIViewController {
             label3.leadingAnchor.constraint(equalTo: button3.leadingAnchor),
             label3.trailingAnchor.constraint(equalTo: button3.trailingAnchor)
         ])
-        button3.addTarget(self, action: #selector(lllll), for: .touchUpInside)
+        button3.addTarget(self, action: #selector(addSpendingTapped), for: .touchUpInside)
         
         
         
@@ -263,13 +384,22 @@ class testController: UIViewController {
 
 
     }
-    @objc func lllll() {
-        print("Settings button tapped!")
+    
+    
+    let separator = UIView()
+    func createSeparator(){
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.backgroundColor = separatorColor
+        view.addSubview(separator)
+        
+        // Add constraints to position the separator within the stack view
+        separator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        separator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        separator.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 15).isActive = true
     }
     
-    
-    
-    
+     
     private func configureNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         navigationBar.prefersLargeTitles = true
@@ -362,6 +492,8 @@ class testController: UIViewController {
     }
     
 }
+
+
 
 
 //    private func configureNavigationBar() {

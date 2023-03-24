@@ -25,6 +25,7 @@
 		E62F38DB29A5463E0031A6B9 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38DA29A5463E0031A6B9 /* Animator.swift */; };
 		E62F38DF29A5485D0031A6B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */; };
 		E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64A059B29A56AA3005B8119 /* HistoryViewController.swift */; };
+		E66FA5FC29CD127200939868 /* DorpdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66FA5FB29CD127200939868 /* DorpdownMenu.swift */; };
 		E676ECFA29CB044D00ECD20E /* testController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E676ECF929CB044D00ECD20E /* testController.swift */; };
 		E6C9DA6729A628ED00A1EE36 /* AddReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */; };
 		E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */; };
@@ -59,6 +60,7 @@
 		E62F38DA29A5463E0031A6B9 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		E62F38DE29A5485C0031A6B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PlaniCo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E64A059B29A56AA3005B8119 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		E66FA5FB29CD127200939868 /* DorpdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DorpdownMenu.swift; sourceTree = "<group>"; };
 		E676ECF929CB044D00ECD20E /* testController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testController.swift; sourceTree = "<group>"; };
 		E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptController.swift; sourceTree = "<group>"; };
 		E6C9DA6829A64AA300A1EE36 /* ScanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanerView.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				E62F38CD29A545680031A6B9 /* Section.swift */,
 				E6C9DA6C29A6543E00A1EE36 /* Model.swift */,
 				E600251029A7E12C003C91DC /* ReceiptAlert.swift */,
+				E66FA5FB29CD127200939868 /* DorpdownMenu.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				E6FFCE0629A5322000B4A718 /* SceneDelegate.swift in Sources */,
 				E62F38C729A542B60031A6B9 /* LoginView.swift in Sources */,
 				E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */,
+				E66FA5FC29CD127200939868 /* DorpdownMenu.swift in Sources */,
 				E6C9DA6D29A6543E00A1EE36 /* Model.swift in Sources */,
 				E676ECFA29CB044D00ECD20E /* testController.swift in Sources */,
 				E600251129A7E12C003C91DC /* ReceiptAlert.swift in Sources */,
