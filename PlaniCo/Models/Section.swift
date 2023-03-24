@@ -46,23 +46,29 @@ struct Item: Itemable {
 }
 
 
-// Model object for a section in a tableview
-//struct summarySection: Sectionable {
 struct summarySection {
     var items: [summaryItem]
+    var backgroundColor: UIColor?
 }
 
-// Model object for a cell in a tableview section
 struct summaryItem {
     var title: String?
-    var detailTitle: String?
-    
+    var category: String?
+    var purchase_date_time: String?
+    var amount: String?
+    var backgroundColor: UIColor?
     
     init(title: String? = nil,
-         detailTitle: String? = nil,
-         textColor: UIColor? = .label) {
+         category: String? = nil,
+         purchase_date_time: String? = nil,
+         amount: String? = nil,
+         backgroundColor: UIColor? = nil) {
         self.title = title
-        self.detailTitle = detailTitle
+        self.category = category
+        self.purchase_date_time = purchase_date_time
+        self.amount = amount
+        self.backgroundColor = backgroundColor
     }
 }
+
 

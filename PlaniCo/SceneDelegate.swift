@@ -107,7 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            userNavController.setBarBackgroundColor(.red)
             tabBarController.viewControllers = [
                 
-                summaryController,
+//                summaryController,
                 TestController,
                 addReceiptController,
                 historyViewController,

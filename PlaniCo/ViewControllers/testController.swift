@@ -7,30 +7,123 @@
 
 import FirebaseAuth
 import UIKit
-import Charts 
-//import SwiftyMenu
+import SwiftUI
+import Charts
 
-class testController: UIViewController {
+class testController: UIViewController , UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mySection.items.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 60
+        }
 
     
-    let accentColor = UIColor(named: "SecondaryTextColor")
-    let accentColor1 = UIColor(named: "ReversedBackgroundColorSet")
+    @objc func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        let item = mySection.items[indexPath.row]
+        
+        // Add icon and rounded square background
+        let iconImageView = UIImageView(frame: CGRect(x: 24, y: 8, width: 32, height: 32))
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.image = UIImage(named: item.category!.lowercased())
+//        iconImageView.tintColor = .red
+//        if let color = chartColors[item.category!.lowercased()] {
+//            iconImageView.tintColor = color
+//        } else {
+//            iconImageView.tintColor = .gray
+//        }
+//        iconImageView.image = iconImage
+
+        // Add rounded corners to iconImageView
+//        iconImageView.layer.cornerRadius = 10
+        iconImageView.layer.cornerCurve = .continuous
+        iconImageView.clipsToBounds = true
+        cell.contentView.addSubview(iconImageView)
+        
+        let iconBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+        var iconBackgroundColor: UIColor?
+        if let color = chartColors[item.category!.lowercased()] {
+            iconBackgroundColor = color
+        } else {
+            iconBackgroundColor = categoryIconColor // fallback color if category is not found in chartColors
+        }
+        iconBackgroundView.backgroundColor = iconBackgroundColor
+        iconBackgroundView.layer.cornerRadius = 15
+        iconBackgroundView.layer.cornerCurve = .continuous
+        iconBackgroundView.center = iconImageView.center
+        cell.contentView.addSubview(iconBackgroundView)
+        
+        let titleLabel = UILabel(frame: CGRect(x: 72, y: 0, width: tableView.frame.width - 120, height: 24))
+        titleLabel.text = item.title
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        titleLabel.textColor = reversedBackgroundColorSet
+        cell.contentView.addSubview(titleLabel)
+        
+        let detailLabel = UILabel(frame: CGRect(x: 72, y: 24, width: tableView.frame.width - 120, height: 20))
+        detailLabel.text = item.category
+        detailLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        detailLabel.textColor = .gray
+        cell.contentView.addSubview(detailLabel)
+
+        // Show only the first 2 words of the date time string
+        let words = item.purchase_date_time!.components(separatedBy: .whitespaces)
+        let truncatedDate = words.prefix(2).joined(separator: " ")
+
+        let dateLabel = UILabel(frame: CGRect(x: 0, y: 24, width: 0, height: 20))
+        dateLabel.text = truncatedDate
+        dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        dateLabel.textColor = .gray
+        dateLabel.sizeToFit()
+        let dateLabelXPosition = tableView.frame.width - dateLabel.frame.width - 16  // 16 is the right padding
+        dateLabel.frame.origin.x = dateLabelXPosition
+        cell.contentView.addSubview(dateLabel)
+
+        let amountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 84, height: 24))
+        amountLabel.text = item.amount
+        amountLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
+        amountLabel.textColor = reversedBackgroundColorSet
+        amountLabel.textAlignment = .right
+        let amountLabelXPosition = tableView.frame.width - amountLabel.frame.width - 16 // 16 is the right padding
+        amountLabel.frame.origin.x = amountLabelXPosition
+        cell.contentView.addSubview(amountLabel)
+
+        cell.contentView.addSubview(iconBackgroundView)
+        cell.contentView.addSubview(iconImageView)
+        cell.contentView.bringSubviewToFront(iconImageView)
+        cell.backgroundColor = item.backgroundColor ?? boxBackgroundColor
+        return cell
+    }
+    
+    var current_month_transactions_url: URL {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            fatalError("Unable to get current user ID")
+        }
+        //                return URL(string: "https://thesis-backend-production.up.railway.app/current_month_transactions/\(userID)")!
+        return URL(string: "https://thesis-backend-production.up.railway.app/current_month_transactions/\(userID)")!
+    }
+    
+    let secondaryTextColor = UIColor(named: "SecondaryTextColor")
+    let categoryIconColor = UIColor(named: "categoryIconColor")
+    let reversedBackgroundColorSet = UIColor(named: "ReversedBackgroundColorSet")
     let boxBackgroundColor = UIColor(named: "BoxBackgroundColor")
     let separatorColor = UIColor(named: "SecondaryTextColor")
-    let chartColors = ["color1": UIColor(named: "chartColors/beige"),
-                       "color2": UIColor(named: "chartColors/brightRed"),
-                       "color3": UIColor(named: "chartColors/bronze"),
-                       "color4": UIColor(named: "chartColors/deepBrown"),
-                       "color5": UIColor(named: "chartColors/forestGreen"),
-                       "color6": UIColor(named: "chartColors/navyBlue"),
-                       "color7": UIColor(named: "chartColors/paleYellow"),
-                       "color8": UIColor(named: "chartColors/seafoamGreen"),
-                       "color9": UIColor(named: "chartColors/sepia"),
-                       "color10": UIColor(named: "chartColors/sienna"),
-                       "color11": UIColor(named: "chartColors/slateBlue"),
-                       "color12": UIColor(named: "chartColors/stoneGrey"),
-                       "color13": UIColor(named: "chartColors/yellow")]
-
+//    let chartColors = ["pouldtry": UIColor(named: "chartColors/beige"),
+//                       "pouletry": UIColor(named: "brightRed"),
+//                       "color3": UIColor(named: "chartColors/bronze"),
+//                       "color4": UIColor(named: "chartColors/deepBrown"),
+//                       "color5": UIColor(named: "chartColors/forestGreen"),
+//                       "color6": UIColor(named: "chartColors/navyBlue"),
+//                       "poultry": UIColor(named: "paleYellow"),
+//                       "color8": UIColor(named: "chartColors/seafoamGreen"),
+//                       "color9": UIColor(named: "chartColors/sepia"),
+//                       "color10": UIColor(named: "chartColors/sienna"),
+//                       "color11": UIColor(named: "chartColors/slateBlue"),
+//                       "color12": UIColor(named: "chartColors/stoneGrey"),
+//                       "color13": UIColor(named: "chartColors/yellow")]
+    
     let userImage: UIImageView = {
         let imageView = UIImageView(systemImageName: "person.circle.fill", tintColor: .secondaryLabel)
         return imageView
@@ -68,7 +161,7 @@ class testController: UIViewController {
         print("settings tapped")
         let alert = UIAlertController(title: "Settings", message: "will present settings :)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-
+        
         present(alert, animated: true, completion: nil)
     }
     
@@ -76,7 +169,7 @@ class testController: UIViewController {
         print("refreshButtonTapped tapped")
         let alert = UIAlertController(title: "Refresh", message: "refreshed :)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-
+        
         present(alert, animated: true, completion: nil)
     }
     
@@ -89,7 +182,7 @@ class testController: UIViewController {
         }))
         present(alert, animated: true, completion: nil)
     }
-
+    
     
     @objc private func addAnticipatedTapped() {
         print("refreshButtonTapped tapped")
@@ -116,7 +209,7 @@ class testController: UIViewController {
         }))
         present(alert, animated: true, completion: nil)
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -130,106 +223,168 @@ class testController: UIViewController {
         createHotButtons()
         createSeparator()
         createChartSummary()
+        configureTable()
+        get_transactions_data()
     }
     
     let chartSummaryStack = UIStackView()
+
+    
+    private var mySection: summarySection {
+        let items = itemss
+        return summarySection(items: items)
+    }
+    
+    private var myTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
+    var itemss = [summaryItem]()
+    func get_transactions_data() {
+        activityIndicator2.startAnimating()
+        let task = URLSession.shared.dataTask(with: current_month_transactions_url) { (data, response, error) in
+            guard let data = data, error == nil else {
+                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            do {
+                let jsonData = try JSONDecoder().decode([TransactionsDataEntry].self, from: data )
+                for entry in jsonData {
+                    let title = "\(entry.company_name)"
+                    let category = "\(entry.category)"
+                    let purchase_date_time = "\(entry.purchase_date_time)"
+                    let amountValue = Int(entry.purchase_total)
+                    let amount = "-\(amountValue) lei"
+                    let item = summaryItem(title: title, category: category, purchase_date_time: purchase_date_time, amount: amount)
+                    self.itemss.append(item)
+                }
+                DispatchQueue.main.async {
+                    self.activityIndicator2.stopAnimating()
+                    self.myTableView.reloadData()
+                }
+
+            } catch {
+                print("Error decoding JSON: \(error.localizedDescription)")
+            }
+        }
+        task.resume()
+    }
+    
+    
+    
+    func configureTable(){
+        chartSummaryStack.addSubview(myTableView)
+        chartSummaryStack.addSubview(activityIndicator2)
+        NSLayoutConstraint.activate([
+            activityIndicator2.centerXAnchor.constraint(equalTo: chartSummaryStack.centerXAnchor),
+            activityIndicator2.centerYAnchor.constraint(equalTo: chartSummaryStack.centerYAnchor),
+            myTableView.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: view.frame.height / 5),
+            myTableView.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor),
+            myTableView.trailingAnchor.constraint(equalTo: chartSummaryStack.trailingAnchor),
+            myTableView.heightAnchor.constraint(equalTo: chartSummaryStack.heightAnchor, multiplier: 1/2),
+        ])
+        myTableView.dataSource = self
+        myTableView.delegate = self
+    }
+    
+    
+    
+    private var activityIndicator2: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .gray
+        return indicator
+    }()
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    let currentMonthLabel = UILabel()
     func createChartSummary() {
         chartSummaryStack.backgroundColor = boxBackgroundColor
-        chartSummaryStack.layer.cornerRadius = 10
+        chartSummaryStack.layer.cornerRadius = 15
         chartSummaryStack.layer.cornerCurve = .continuous
         
-        // Add label to top left corner
         let label = UILabel()
         label.text = "Operations"
-        label.textColor = accentColor1
+        label.textColor = reversedBackgroundColorSet
         label.font = UIFont.systemFont(ofSize: view.frame.height / 50, weight: .medium)
         chartSummaryStack.addSubview(label)
+        
+        let spentSumLabel = UILabel()
+        spentSumLabel.text = "2157.9 lei"
+        spentSumLabel.textColor = reversedBackgroundColorSet
+        spentSumLabel.font = UIFont.systemFont(ofSize: view.frame.height / 35, weight: .medium)
+        chartSummaryStack.addSubview(spentSumLabel)
+        
+        //        spentSumLabel.backgroundColor = UIColor.red
+        
+        let spentInLabel = UILabel()
+        spentInLabel.text = "spent in March"
+        spentInLabel.textColor = secondaryTextColor
+        spentInLabel.font = UIFont.systemFont(ofSize: view.frame.height / 60, weight: .medium)
+        chartSummaryStack.addSubview(spentInLabel)
+        
+        let barChartView = UIHostingController(rootView: Test())
+        chartSummaryStack.addArrangedSubview(barChartView.view)
+        addChild(barChartView)
+        barChartView.didMove(toParent: self)
+        barChartView.view.backgroundColor = UIColor.clear
+        
+        let operationsSeparator = UIView()
+        operationsSeparator.backgroundColor = separatorColor
+        chartSummaryStack.addSubview(operationsSeparator)
+        
+        var ddd = ""
+
+        view.addSubview(chartSummaryStack)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16).isActive = true
-        label.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 24).isActive = true
-        
-        // Add label to top left corner
-        let spentText = UILabel()
-        spentText.text = "2157. lei"
-        spentText.textColor = accentColor1
-        spentText.font = UIFont.systemFont(ofSize: view.frame.height / 35, weight: .medium)
-        chartSummaryStack.addSubview(spentText)
-        spentText.translatesAutoresizingMaskIntoConstraints = false
-        spentText.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: view.frame.height / 50 + 48).isActive = true
-        spentText.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16).isActive = true
-        
-        // Add label to top left corner
-        let spentText2 = UILabel()
-        spentText2.text = "spent in March"
-        spentText2.textColor = accentColor
-        spentText2.font = UIFont.systemFont(ofSize: view.frame.height / 60, weight: .medium)
-        chartSummaryStack.addSubview(spentText2)
-        spentText2.translatesAutoresizingMaskIntoConstraints = false
-        spentText2.bottomAnchor.constraint(equalTo: spentText.bottomAnchor, constant: -2).isActive = true
-        spentText2.leadingAnchor.constraint(equalTo: spentText.trailingAnchor, constant: 5).isActive = true
-        
-        
-        
-        
-        
-        
-        
-        
-        
-            
-            // Add chart summary stack to view
-            view.addSubview(chartSummaryStack)
-            chartSummaryStack.translatesAutoresizingMaskIntoConstraints = false
-            chartSummaryStack.heightAnchor.constraint(equalToConstant: 200).isActive = true
-            chartSummaryStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-            chartSummaryStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-            chartSummaryStack.topAnchor.constraint(equalTo: hotButtonsStack.bottomAnchor, constant: 30).isActive = true
-            
+        spentSumLabel.translatesAutoresizingMaskIntoConstraints = false
+        spentInLabel.translatesAutoresizingMaskIntoConstraints = false
+        barChartView.view.translatesAutoresizingMaskIntoConstraints = false
+        operationsSeparator.translatesAutoresizingMaskIntoConstraints = false
+        chartSummaryStack.translatesAutoresizingMaskIntoConstraints = false
+        var runtime_warning = ""
+        NSLayoutConstraint.activate([
+            chartSummaryStack.heightAnchor.constraint(equalToConstant: view.frame.height / 3),
+            chartSummaryStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            chartSummaryStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            chartSummaryStack.topAnchor.constraint(equalTo: hotButtonsStack.bottomAnchor, constant: 30),
+            label.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
+            label.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 24),
+            spentSumLabel.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 60),
+            spentSumLabel.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
+            spentInLabel.bottomAnchor.constraint(equalTo: spentSumLabel.bottomAnchor, constant: -2),
+            spentInLabel.leadingAnchor.constraint(equalTo: spentSumLabel.trailingAnchor, constant: 5),
+            //"next constrait is causing the runtime warning"
+            barChartView.view.bottomAnchor.constraint(equalTo: chartSummaryStack.bottomAnchor, constant: 5),
+            operationsSeparator.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
+            operationsSeparator.trailingAnchor.constraint(equalTo: chartSummaryStack.trailingAnchor, constant: -16),
+            operationsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
+            operationsSeparator.topAnchor.constraint(equalTo: spentInLabel.bottomAnchor, constant: 20),
+        ])
         
     }
     
     
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
+  
     let hotButtonsStack = UIStackView()
     func createHotButtons(){
         hotButtonsStack.backgroundColor = boxBackgroundColor
-        hotButtonsStack.layer.cornerRadius = 10
+        hotButtonsStack.layer.cornerRadius = 15
         hotButtonsStack.layer.cornerCurve = .continuous
-
+        
         view.addSubview(hotButtonsStack)
         hotButtonsStack.translatesAutoresizingMaskIntoConstraints = false
         hotButtonsStack.heightAnchor.constraint(equalToConstant: 100).isActive = true
         hotButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
         hotButtonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-        hotButtonsStack.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 15 * 2 + 2).isActive = true
-
+        hotButtonsStack.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 20 * 2 + 2).isActive = true
+        
         // Add two vertical separators
         let separator0 = UIView()
         separator0.translatesAutoresizingMaskIntoConstraints = false
@@ -240,14 +395,14 @@ class testController: UIViewController {
         let separator1 = UIView()
         separator1.backgroundColor = separatorColor
         separator1.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
         let button1 = UIButton()
         button1.translatesAutoresizingMaskIntoConstraints = false
-        button1.tintColor = accentColor1
+        button1.tintColor = reversedBackgroundColorSet
         let label = UILabel()
         label.text = "Income"
-        label.textColor = accentColor1
+        label.textColor = reversedBackgroundColorSet
         label.font = UIFont.systemFont(ofSize: view.frame.height / 70)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -263,7 +418,7 @@ class testController: UIViewController {
         UIGraphicsEndImageContext()
         button1.setImage(scaledImage, for: .normal)
         button1.imageView?.contentMode = .scaleAspectFit
-        button1.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
+        //        button1.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
         NSLayoutConstraint.activate([
             button1.widthAnchor.constraint(equalToConstant: 70),
             button1.heightAnchor.constraint(equalToConstant: 70),
@@ -272,16 +427,16 @@ class testController: UIViewController {
             label.trailingAnchor.constraint(equalTo: button1.trailingAnchor)
         ])
         button1.addTarget(self, action: #selector(addIncomeTapped), for: .touchUpInside)
-
-
-
+        
+        
+        
         
         let button2 = UIButton()
         button2.translatesAutoresizingMaskIntoConstraints = false
-        button2.tintColor = accentColor1
+        button2.tintColor = reversedBackgroundColorSet
         let label2 = UILabel()
         label2.text = "Anticipated"
-        label2.textColor = accentColor1
+        label2.textColor = reversedBackgroundColorSet
         label2.font = UIFont.systemFont(ofSize: view.frame.height / 70)
         label2.textAlignment = .center
         label2.translatesAutoresizingMaskIntoConstraints = false
@@ -296,7 +451,7 @@ class testController: UIViewController {
         UIGraphicsEndImageContext()
         button2.setImage(scaledImage2, for: .normal)
         button2.imageView?.contentMode = .scaleAspectFit
-        button2.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
+        //        button2.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
         NSLayoutConstraint.activate([
             button2.widthAnchor.constraint(equalToConstant: 70),
             button2.heightAnchor.constraint(equalToConstant: 70),
@@ -312,28 +467,28 @@ class testController: UIViewController {
         let separator2 = UIView()
         separator2.backgroundColor = separatorColor
         separator2.translatesAutoresizingMaskIntoConstraints = false
-
-//        let button2 = UIButton()
-//        button2.setTitle("Button 2", for: .normal)
-//        button2.backgroundColor = .green
-//        button2.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        //        let button2 = UIButton()
+        //        button2.setTitle("Button 2", for: .normal)
+        //        button2.backgroundColor = .green
+        //        button2.translatesAutoresizingMaskIntoConstraints = false
+        
         let separator3 = UIView()
         separator3.backgroundColor = separatorColor
         separator3.translatesAutoresizingMaskIntoConstraints = false
-
-//        let button3 = UIButton()
-//        button3.setTitle("Button 3", for: .normal)
-//        button3.backgroundColor = .red
-//        button3.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        //        let button3 = UIButton()
+        //        button3.setTitle("Button 3", for: .normal)
+        //        button3.backgroundColor = .red
+        //        button3.translatesAutoresizingMaskIntoConstraints = false
+        
         
         let button3 = UIButton()
         button3.translatesAutoresizingMaskIntoConstraints = false
-        button3.tintColor = accentColor1
+        button3.tintColor = reversedBackgroundColorSet
         let label3 = UILabel()
         label3.text = "Spending"
-        label3.textColor = accentColor1
+        label3.textColor = reversedBackgroundColorSet
         label3.font = UIFont.systemFont(ofSize: view.frame.height / 70)
         label3.textAlignment = .center
         label3.translatesAutoresizingMaskIntoConstraints = false
@@ -349,7 +504,7 @@ class testController: UIViewController {
         UIGraphicsEndImageContext()
         button3.setImage(scaledImage3, for: .normal)
         button3.imageView?.contentMode = .scaleAspectFit
-        button3.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
+        //        button3.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 5)
         NSLayoutConstraint.activate([
             button3.widthAnchor.constraint(equalToConstant: 70),
             button3.heightAnchor.constraint(equalToConstant: 70),
@@ -370,19 +525,19 @@ class testController: UIViewController {
         hotButtonsStack.addArrangedSubview(separator3)
         hotButtonsStack.addArrangedSubview(button3)
         hotButtonsStack.addArrangedSubview(separator10)
-
+        
         // Set the width of the separators to be equal to the spacing between the arranged subviews
         separator2.widthAnchor.constraint(equalToConstant: 0.5).isActive = true
         separator3.widthAnchor.constraint(equalToConstant: 0.5).isActive = true
         separator2.heightAnchor.constraint(equalToConstant: 50).isActive = true
         separator3.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
+        
         // Set the distribution and alignment of the stack view
         hotButtonsStack.axis = .horizontal
         hotButtonsStack.distribution = .equalSpacing
         hotButtonsStack.alignment = .center
-
-
+        
+        
     }
     
     
@@ -396,16 +551,16 @@ class testController: UIViewController {
         separator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         separator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        separator.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 15).isActive = true
+        separator.topAnchor.constraint(equalTo: vieww.bottomAnchor, constant: view.frame.height / 20).isActive = true
     }
     
-     
+    
     private func configureNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         navigationBar.prefersLargeTitles = true
-        let accentColor = UIColor(named: "AccentColor")
-        navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
-        navigationBar.largeTitleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
+        let secondaryTextColor = UIColor(named: "secondaryTextColor")
+        navigationBar.titleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
+        navigationBar.largeTitleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
         
         // Create and configure the title label
         let titleLabel = UILabel()
@@ -458,14 +613,14 @@ class testController: UIViewController {
         let yourBalanceLabel = UILabel()
         yourBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         yourBalanceLabel.text = "You can spend"
-        yourBalanceLabel.textColor = accentColor
+        yourBalanceLabel.textColor = secondaryTextColor
         yourBalanceLabel.font = UIFont.systemFont(ofSize: view.frame.height / 50, weight: .light)
         vieww.addSubview(yourBalanceLabel)
         
         let sumLabel = UILabel()
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.text = "2232.23 lei"
-        sumLabel.textColor = accentColor1
+        sumLabel.textColor = reversedBackgroundColorSet
         sumLabel.font = UIFont.systemFont(ofSize: view.frame.height / 15 , weight: .light)
         vieww.addSubview(sumLabel)
         view.addSubview(vieww)
@@ -499,9 +654,9 @@ class testController: UIViewController {
 //    private func configureNavigationBar() {
 //        guard let navigationBar = navigationController?.navigationBar else { return }
 //        navigationBar.prefersLargeTitles = true
-//        let accentColor = UIColor(named: "AccentColor")
-//        navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
-//        navigationBar.largeTitleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
+//        let secondaryTextColor = UIColor(named: "secondaryTextColor")
+//        navigationBar.titleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
+//        navigationBar.largeTitleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
 //
 //        // Create and configure the title label
 //        let titleLabel = UILabel()
@@ -528,4 +683,66 @@ class testController: UIViewController {
 //
 //        // Add the buttons to the navigation bar
 //        navigationItem.rightBarButtonItems = [settingsButton, refreshButton]
-//    }
+//    }poultry restaurant grocery
+let chartColors = ["1": UIColor(named: "chartColors/beige"),
+                   "poultry": UIColor(named: "brightRed"),
+                   "3": UIColor(named: "bronze"),
+                   "4": UIColor(named: "chartColors/deepBrown"),
+                   "grocery": UIColor(named: "forestGreen"),
+                   "6": UIColor(named: "chartColors/navyBlue"),
+                   "7": UIColor(named: "paleYellow"),
+                   "33": UIColor(named: "seafoamGreen"),
+                   "333": UIColor(named: "sepia"),
+                   "22": UIColor(named: "chartColors/sienna"),
+                   "222": UIColor(named: "slateBlue"),
+                   "11": UIColor(named: "chartColors/stoneGrey"),
+                   "restaurant": UIColor(named: "yellow")]
+
+
+struct Test: View {
+    var body: some View {
+        Chart {
+            ForEach(storage) { item in
+                BarMark(
+                    x: .value("Name", item.value),
+                    y: .value("Storage", item.type),
+                    stacking: .center)
+                .foregroundStyle(by: .value("Name", item.name))
+                .cornerRadius(10)
+//                .chartForegroundStyleScale(type: <#T##Charts.ScaleType?#>)
+            }
+        }
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, minHeight: 35, maxHeight: 35)
+        .background(Color.clear)
+        .chartXAxis(.hidden)
+        .chartYAxis(.hidden)
+    }
+}
+
+
+struct Storage: Identifiable {
+    let id = UUID().uuidString
+    let type: String = "Storage"
+    let name: String
+    let value: Int
+    
+    init(name: String, value: Int) {
+        self.name = name
+        self.value = value
+    }
+}
+
+var storage: [Storage] = [
+    .init(name: "Photos", value: 40),
+    .init(name: "Video", value: 30),
+    .init(name: "Music", value: 20),
+    .init(name: "Docs", value: 10)
+]
+
+
+
+struct CellModel: Decodable {
+    let title: String
+    let subtitle: String
+}
