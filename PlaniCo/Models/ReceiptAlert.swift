@@ -13,7 +13,7 @@ import SwiftUI
     static var alertController: UIAlertController?
     private static var companies: [[String: Any]] = []
     private var selectedCompanyName: String?
-
+    
     @objc private static func datePickerValueChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
@@ -21,25 +21,55 @@ import SwiftUI
         let textField = alertController?.textFields?[11]
         textField?.text = selectedDate
     }
-
-
+    
+    
     private static func loadCompanies() -> [[String: Any]]? {
+//        print("2")
         guard let path = Bundle.main.path(forResource: "companies", ofType: "json"),
+
               let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-              let companies = json["companies"] as? [[String: Any]] else {
-            return nil
-        }
+              let companies = json["companies"] as? [[String: Any]] else { return nil }
+//        print(path)
         return companies
     }
+//    private static func loadCompanies() -> [[String: Any]]? {
+//        print("2")
+//
+//        guard let filePath = Bundle.main.path(forResource: "companies", ofType: "json"),
+//              let jsonData = FileManager.default.contents(atPath: filePath) else {
+//                print("Error loading companies.json: file not found")
+//                return nil
+//        }
+//
+//        do {
+//            let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+//            guard let companies = json?["companies"] as? [[String: Any]] else {
+//                print("Error loading companies.json: invalid JSON format")
+//                return nil
+//            }
+//            print(jsonData)
+//            return companies
+//        } catch {
+//            print("Error loading companies.json: \(error.localizedDescription)")
+//            return nil
+//        }
+//    }
 
+
+
+
+    
     @objc private static func updateFields( ) {
         if let loadedCompanies = loadCompanies() {
+//            print("1")
             companies = loadedCompanies
         }
+//        print("4")
         let textField = ReceiptAlert.alertController?.textFields?[3]
         let companyName = textField?.text
         for company in companies {
+//            print("3")
             if company["company_name"] as? String == companyName {
                 if let legalName = company["company_legal_name"] {
                     let textField = ReceiptAlert.alertController?.textFields?[1]
@@ -57,73 +87,73 @@ import SwiftUI
             }
         }
     }
-
+    
     static func createAlert(companyLegalName: String, companyName: String, companyType: String, category: String, purchaseTotal: String, purchaseDateTime: String, confirmHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         alertController = UIAlertController(title: "Receipt details", message: "Please confirm if all the information displayed in this alert is veridic", preferredStyle: .alert)
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Company legal name:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Company legal name"
             textField.text = companyLegalName
             textField.isEnabled = false
             textField.textColor = .gray
         }
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Company name:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Company name"
             textField.text = companyName
             textField.addTarget(ReceiptAlert.self, action: #selector(ReceiptAlert.updateFields), for: .editingChanged)
         }
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Company type:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Company type"
             textField.text = companyType
             textField.isEnabled = false
             textField.textColor = .gray
         }
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Company category:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Company category"
             textField.text = category
             textField.isEnabled = false
             textField.textColor = .gray
         }
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Purchase total:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Purchase total"
             textField.keyboardType = .decimalPad
             textField.text = "\(purchaseTotal)"
         }
-
+        
         alertController?.addTextField { (textField) -> Void in
             textField.text = "Purchase date:"
             textField.isUserInteractionEnabled = false
         }
-
+        
         alertController?.addTextField { textField in
             textField.placeholder = "Purchase date"
             textField.text = "\(purchaseDateTime)"
@@ -135,7 +165,7 @@ import SwiftUI
             datePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date()) // Set the minimum date to one year ago
             datePicker.maximumDate = Date() // Set the maximum date to today
             datePicker.addTarget(self, action: #selector(self.datePickerValueChanged), for: .valueChanged)
-
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
             if let purchaseDate = dateFormatter.date(from: purchaseDateTime) {
@@ -143,10 +173,10 @@ import SwiftUI
             } else {
                 datePicker.date = Date()
             }
-
+            
             textField.inputView = datePicker
         }
-
+        
         if let textFields = alertController?.textFields {
             for i in 0..<textFields.count {
                 if i % 2 == 0 {
@@ -162,7 +192,7 @@ import SwiftUI
             let category1 = alertController?.textFields?[7].text ?? ""
             let purchaseTotal1 = alertController?.textFields?[9].text ?? ""
             let purchaseDateTime1 = alertController?.textFields?[11].text ?? ""
-
+            
             guard let currentUser = Auth.auth().currentUser else { return }
             let userId = currentUser.uid
             let postPaycheckPayload: [String: Any] = [
@@ -179,7 +209,7 @@ import SwiftUI
             postPaycheckRequest.httpMethod = "POST"
             postPaycheckRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             postPaycheckRequest.httpBody = try? JSONSerialization.data(withJSONObject: postPaycheckPayload)
-
+            
             URLSession.shared.dataTask(with: postPaycheckRequest) { (data, response, error) in
                 if let error = error {
                     let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
@@ -187,19 +217,19 @@ import SwiftUI
                     //                    self.present(alertController, animated: true)
                     return
                 }
-
+                
                 guard let data = data else {
                     let alertController = UIAlertController(title: "Error", message: "No data received", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .default))
                     //                                        self.present(alertController, animated: true)
                     return
                 }
-
+                
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 DispatchQueue.main.async {
                     if let jsonData = try? JSONSerialization.data(withJSONObject: json ?? "{'message' : 'Error while parsing the response'}"),
                        let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-
+                        
                         let resultMessage = jsonDictionary["message"] as? String ?? "Error while parsing the response"
                         let resultTitle = jsonDictionary["result"] as? String ?? "Error while parsing the response"
                         let alertController = UIAlertController(title: resultTitle, message: resultMessage, preferredStyle: .alert)
@@ -207,16 +237,16 @@ import SwiftUI
                         //                                                self.present(alertController, animated: true)
                     }
                 }
-
-
+                
+                
             }.resume()
         }
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
+        
         alertController?.addAction(saveAction)
         alertController?.addAction(cancelAction)
-
+        
         return alertController!
     }
 }

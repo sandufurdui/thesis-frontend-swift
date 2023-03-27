@@ -13,13 +13,13 @@
             "category": "clothing"
         },
         {
-            "category": "meal",
+            "category": "grocery",
             "company_type": "SRL",
             "company_name": "Nr.1 Supermarket",
             "company_legal_name": "47TH PARALLEL"
         },
         {
-            "category": "meal",
+            "category": "grocery",
             "company_type": "SRL",
             "company_name": "Pegas",
             "company_legal_name": "PEGAS"
@@ -34,7 +34,7 @@
             "company_legal_name": "KAUFLAND",
             "company_type": "SRL",
             "company_name": "KAUFLAND",
-            "category": "meal"
+            "category": "grocery"
         },
         {
             "company_legal_name": "PRIMUNISTIL",
@@ -55,7 +55,7 @@
             "category": "gas"
         },
         {
-            "category": "meal",
+            "category": "grocery",
             "company_type": "SRL",
             "company_name": "Nr.1 Supermarket",
             "company_legal_name": "A.B.C. GURMANDIS"
@@ -67,7 +67,7 @@
             "category": "restaurant"
         },
         {
-            "category": "meal",
+            "category": "grocery",
             "company_type": "SRL",
             "company_name": "Linella",
             "company_legal_name": "MOLDRETAIL GROUP"
@@ -94,7 +94,7 @@
             "company_legal_name": "Dacia LV",
             "company_type": "SA",
             "company_name": "Jardi",
-            "category": "meal"
+            "category": "grocery"
         },
         {
             "category": "gas",
@@ -121,7 +121,7 @@
             "category": "restaurant"
         },
         {
-            "category": "meal",
+            "category": "grocery",
             "company_type": "SRL",
             "company_name": "Pegas",
             "company_legal_name": "PEGAS-RT"
@@ -148,7 +148,7 @@
             "company_legal_name": "IMENSITATE",
             "company_type": "SRL",
             "company_name": "Bonus",
-            "category": "meal"
+            "category": "grocery"
         },
         {
             "company_legal_name": "METRO CASH & CARRY MOLDOVA",
@@ -161,6 +161,164 @@
             "company_type": "SRL",
             "company_name": "Andy's Pizza",
             "category": "restaurant"
+        },
+        
+        
+        
+        
+        
+        
+        
+        {
+            "company_legal_name": "Rogob",
+            "company_type": "SRL",
+            "company_name": "Rogob",
+            "category": "meat shop"
+        },
+        {
+            "company_legal_name": "FOURCHETTE-M",
+            "company_type": "SRL",
+            "company_name": "Fourchette",
+            "category": "grocery"
+        },
+        {
+            "company_legal_name": "PRODIAFARM",
+            "company_type": "SRL",
+            "company_name": "Hipocrates",
+            "category": "pharma"
+        },
+        {
+            "company_legal_name": "MOLDPRESA GROUP",
+            "company_type": "SRL",
+            "company_name": "Librarius",
+            "category": "??" 
+        },
+        {
+            "company_legal_name": "VIORICA COSMETIC",
+            "company_type": "SA",
+            "company_name": "Viorica",
+            "category": "cosmetics"
+        },
+        {
+            "company_legal_name": "TAGAER",
+            "company_type": "SRL",
+            "company_name": "Tagaer",
+            "category": "clothing"
+        },
+        
+        
+        
+        
+        {
+            "company_legal_name": "CRAFTI BUSINESS",
+            "company_type": "SRL",
+            "company_name": "Crafti",
+            "category": "office supplies"
+        },
+        {
+            "company_legal_name": "CRAFTI BUSINESS",
+            "company_type": "SRL",
+            "company_name": "Jucarenia",
+            "category": "kids"
+        },
+        
+        
+        
+        {
+            "company_legal_name": "FARMACIA FAMILIEI",
+            "company_type": "SRL",
+            "company_name": "Farmacia Familiei",
+            "category": "pharma"
+        },
+        {
+            "company_legal_name": "DEFACTO RETAIL MVA",
+            "company_type": "SRL",
+            "company_name": "DeFacto",
+            "category": "clothing"
+        },
+        {
+            "company_legal_name": "GLOBAL STORE",
+            "company_type": "SRL",
+            "company_name": "Global Store",
+            "category": "housing"
+        },
+        {
+            "company_legal_name": "VIZAJE-NICA",
+            "company_type": "SRL",
+            "company_name": "Vizaje Nica",
+            "category": "cosmetics"
+        },
+        {
+            "company_legal_name": "MEDIX",
+            "company_type": "SRL",
+            "company_name": "Cosmetic Shop??",
+            "category": "cosmetics"
+        },
+        {
+            "company_legal_name": "TAROL DD",
+            "company_type": "SRL",
+            "company_name": "Jysk",
+            "category": "housing"
+        },{
+            "company_legal_name": "ARMONIE-SFS",
+            "company_type": "SRL",
+            "company_name": "Organic Shop",
+            "category": "cosmetics"
+        },{
+            "company_legal_name": "DOLGANA SILVER",
+            "company_type": "SRL",
+            "company_name": "Friends",
+            "category": "coffee"
+        },{
+            "company_legal_name": "LC WAIKIKI RETAIL MOL",
+            "company_type": "SRL",
+            "company_name": "LC Waikiki",
+            "category": "clothing"
+        },{
+            "company_legal_name": "OLVIC-PRIM",
+            "company_type": "SRL",
+            "company_name": "Pan Pan",
+            "category": "??"
+        },{
+            "company_legal_name": "NEWYORKER MLD",
+            "company_type": "SRL",
+            "company_name": "New Yorker",
+            "category": "clothing"
+        },{
+            "company_legal_name": "HONEST COMPANY",
+            "company_type": "SRL",
+            "company_name": "Merci",
+            "category": "grocery"
+        },{
+            "company_legal_name": "AVENS GROUP",
+            "company_type": "SRL",
+            "company_name": "Pizza Mania",
+            "category": "restaurant"
+        },{
+            "company_legal_name": "MAAEX GROUP",
+            "company_type": "SRL",
+            "company_name": "Maalex Group Unic",
+            "category": "produse din piele genti portmonee etc"
+        },{
+            "company_legal_name": "SOFINALIA",
+            "company_type": "SRL",
+            "company_name": "Cosmetic Shop",
+            "category": "cosmetics"
+        },{
+            "company_legal_name": "IBL ELITE TRADE",
+            "company_type": "SRL",
+            "company_name": "Sublime",
+            "category": "cosmetics"
+        },{
+            "company_legal_name": "DEEA HOUSE",
+            "company_type": "SRL",
+            "company_name": "??",
+            "category": "placinte"
+        },{
+            "company_legal_name": "LUCART-AMELI",
+            "company_type": "SRL",
+            "company_name": "undeva in unic(ceva cu lana)",
+            "category": "hz"
         }
     ]
 }

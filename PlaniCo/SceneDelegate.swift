@@ -32,13 +32,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return navController
     }() 
     lazy var summaryController: UINavigationController = {
-        let navController = UINavigationController(rootViewController: SummaryController())
+        let navController = UINavigationController(rootViewController: anotherTest())
         
         navController.view.backgroundColor = accentColor
         return navController
     }()
     lazy var TestController: UINavigationController = {
-        let navController = UINavigationController(rootViewController: testController())
+        let navController = UINavigationController(rootViewController: SummaryController())
         navController.view.backgroundColor = accentColor
         return navController
     }()

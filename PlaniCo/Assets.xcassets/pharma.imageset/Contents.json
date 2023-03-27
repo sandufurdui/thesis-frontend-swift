@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "icons8-ingredients-50.png",
+      "filename" : "icons8-hand-with-a-pill-64.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-ingredients-100.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

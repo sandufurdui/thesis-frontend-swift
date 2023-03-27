@@ -45,7 +45,7 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         let iconBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
         var iconBackgroundColor: UIColor?
-        if let color = chartColors[item.category!.lowercased()] {
+        if let color = chartColorsUIKit[item.category!.lowercased()] {
             iconBackgroundColor = color
         } else {
             iconBackgroundColor = categoryIconColor // fallback color if category is not found in chartColors
@@ -110,19 +110,6 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
     let reversedBackgroundColorSet = UIColor(named: "ReversedBackgroundColorSet")
     let boxBackgroundColor = UIColor(named: "BoxBackgroundColor")
     let separatorColor = UIColor(named: "SecondaryTextColor")
-//    let chartColors = ["pouldtry": UIColor(named: "chartColors/beige"),
-//                       "pouletry": UIColor(named: "brightRed"),
-//                       "color3": UIColor(named: "chartColors/bronze"),
-//                       "color4": UIColor(named: "chartColors/deepBrown"),
-//                       "color5": UIColor(named: "chartColors/forestGreen"),
-//                       "color6": UIColor(named: "chartColors/navyBlue"),
-//                       "poultry": UIColor(named: "paleYellow"),
-//                       "color8": UIColor(named: "chartColors/seafoamGreen"),
-//                       "color9": UIColor(named: "chartColors/sepia"),
-//                       "color10": UIColor(named: "chartColors/sienna"),
-//                       "color11": UIColor(named: "chartColors/slateBlue"),
-//                       "color12": UIColor(named: "chartColors/stoneGrey"),
-//                       "color13": UIColor(named: "chartColors/yellow")]
     
     let userImage: UIImageView = {
         let imageView = UIImageView(systemImageName: "person.circle.fill", tintColor: .secondaryLabel)
@@ -164,14 +151,34 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         present(alert, animated: true, completion: nil)
     }
-    
+
+    // Declare timer and buttonPressCount at the class or file scope
+    var timer: Timer?
+    var buttonPressCount = 0
+
     @objc private func refreshButtonTapped() {
-        print("refreshButtonTapped tapped")
-        let alert = UIAlertController(title: "Refresh", message: "refreshed :)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        if buttonPressCount == 0 {
+            // Start a timer to reset buttonPressCount after 10 seconds
+            timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+                self?.buttonPressCount = 0
+            }
+        }
         
-        present(alert, animated: true, completion: nil)
+        // Increment buttonPressCount and check if it exceeds the limit
+        buttonPressCount += 1
+        if buttonPressCount > 1 {
+            // Cancel the timer and display an alert
+            timer?.invalidate()
+            let alert = UIAlertController(title: "Button Pressed Too Many Times", message: "Please wait 10 seconds before pressing the button again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        } else {
+            // Refresh the data
+            refreshData()
+        }
     }
+
+
     
     @objc private func addIncomeTapped(income: Int) {
         print("refreshButtonTapped tapped")
@@ -225,6 +232,16 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         createChartSummary()
         configureTable()
         get_transactions_data()
+    }
+    
+    @objc private func refreshData() {
+        // Fetch the data again and update the UI
+        get_transactions_data()
+//        setData()
+//        configureTable()
+        itemss = [summaryItem]()
+        // Stop the refreshing animation
+//        refreshControl.endRefreshing()
     }
     
     let chartSummaryStack = UIStackView()
@@ -328,15 +345,23 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         spentInLabel.font = UIFont.systemFont(ofSize: view.frame.height / 60, weight: .medium)
         chartSummaryStack.addSubview(spentInLabel)
         
-        let barChartView = UIHostingController(rootView: Test())
-        chartSummaryStack.addArrangedSubview(barChartView.view)
-        addChild(barChartView)
-        barChartView.didMove(toParent: self)
-        barChartView.view.backgroundColor = UIColor.clear
+//        let barChartView = UIHostingController(rootView: BarChartSwiftUI())
+//        chartSummaryStack.addArrangedSubview(barChartView.view)
+//        addChild(barChartView)
+//        barChartView.didMove(toParent: self)
+//        barChartView.view.backgroundColor = UIColor.clear
+        
+        
+        
+//        let testChartView = UIView()
         
         let operationsSeparator = UIView()
-        operationsSeparator.backgroundColor = separatorColor
+        operationsSeparator.backgroundColor = .red
         chartSummaryStack.addSubview(operationsSeparator)
+        
+        let testChartView = UIView()
+        testChartView.backgroundColor = .green
+        chartSummaryStack.addSubview(testChartView)
         
         var ddd = ""
 
@@ -344,15 +369,20 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         label.translatesAutoresizingMaskIntoConstraints = false
         spentSumLabel.translatesAutoresizingMaskIntoConstraints = false
         spentInLabel.translatesAutoresizingMaskIntoConstraints = false
-        barChartView.view.translatesAutoresizingMaskIntoConstraints = false
+//        barChartView.view.translatesAutoresizingMaskIntoConstraints = false
         operationsSeparator.translatesAutoresizingMaskIntoConstraints = false
         chartSummaryStack.translatesAutoresizingMaskIntoConstraints = false
         var runtime_warning = ""
         NSLayoutConstraint.activate([
+            
             chartSummaryStack.heightAnchor.constraint(equalToConstant: view.frame.height / 3),
             chartSummaryStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             chartSummaryStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             chartSummaryStack.topAnchor.constraint(equalTo: hotButtonsStack.bottomAnchor, constant: 30),
+            testChartView.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
+            testChartView.trailingAnchor.constraint(equalTo: chartSummaryStack.trailingAnchor, constant: -16),
+            testChartView.heightAnchor.constraint(equalToConstant: 0.5),
+            testChartView.topAnchor.constraint(equalTo: spentInLabel.bottomAnchor, constant: 20),
             label.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
             label.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 24),
             spentSumLabel.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 60),
@@ -360,7 +390,7 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
             spentInLabel.bottomAnchor.constraint(equalTo: spentSumLabel.bottomAnchor, constant: -2),
             spentInLabel.leadingAnchor.constraint(equalTo: spentSumLabel.trailingAnchor, constant: 5),
             //"next constrait is causing the runtime warning"
-            barChartView.view.bottomAnchor.constraint(equalTo: chartSummaryStack.bottomAnchor, constant: 5),
+//            barChartView.view.bottomAnchor.constraint(equalTo: chartSummaryStack.bottomAnchor, constant: 5),
             operationsSeparator.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
             operationsSeparator.trailingAnchor.constraint(equalTo: chartSummaryStack.trailingAnchor, constant: -16),
             operationsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
@@ -445,7 +475,8 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         // Add settings icon
         let image2 = UIImage(named: "anticipated")?.withRenderingMode(.alwaysTemplate)
         UIGraphicsBeginImageContextWithOptions(iconSize, false, 0.0)
-        let rect2 = CGRect(origin: .zero, size: iconSize)
+        let iconSize2 = CGSize(width: 32, height: 32)
+        let rect2 = CGRect(origin: .zero, size: iconSize2)
         image2?.draw(in: rect2)
         let scaledImage2 = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysTemplate)
         UIGraphicsEndImageContext()
@@ -626,123 +657,77 @@ class testController: UIViewController , UITableViewDelegate, UITableViewDataSou
         view.addSubview(vieww)
         
         NSLayoutConstraint.activate([
-            //            vieww.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             vieww.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height / 5),
-            //            vieww.bottomAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height / 5),
             vieww.widthAnchor.constraint(equalTo: view.widthAnchor),
             vieww.heightAnchor.constraint(equalToConstant: view.frame.height / 50 + view.frame.height / 15),
-            //            vieww.heightAnchor.constraint(equalToConstant: 100),
             yourBalanceLabel.topAnchor.constraint(equalTo: vieww.topAnchor),
             yourBalanceLabel.leadingAnchor.constraint(equalTo: vieww.leadingAnchor, constant: 24),
-            //            yourBalanceLabel.bottomAnchor.constraint(equalTo: vieww.trailingAnchor, constant: 100),
-            //            yourBalanceLabel.bottomAnchor.constraint(equalTo: sumLabel.topAnchor, constant: -4),
-            //
             sumLabel.topAnchor.constraint(equalTo: yourBalanceLabel.bottomAnchor),
-            sumLabel.leadingAnchor.constraint(equalTo: vieww.leadingAnchor, constant: 24),
-            //            sumLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //            sumLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            sumLabel.leadingAnchor.constraint(equalTo: vieww.leadingAnchor, constant: 24)
         ])
-        
-        //        return view
     }
-    
 }
 
 
+//let chartColors = ["1": UIColor(named: "chartColors/beige"),
+//                   "poultry": UIColor(named: "brightRed"),
+//                   "3": UIColor(named: "bronze"),
+//                   "4": UIColor(named: "chartColors/deepBrown"),
+//                   "grocery": UIColor(named: "forestGreen"),
+//                   "6": UIColor(named: "chartColors/navyBlue"),
+//                   "7": UIColor(named: "paleYellow"),
+//                   "33": UIColor(named: "seafoamGreen"),
+//                   "clothing": UIColor(named: "sienna"),
+//                   "meat shop": UIColor(named: "purpleRed"),
+//                   "pharma": UIColor(named: "pharmacyBlue"),
+//                   "gas": UIColor(named: "stoneBlue"),
+//                   "restaurant": UIColor(named: "yellow")]
 
-
-//    private func configureNavigationBar() {
-//        guard let navigationBar = navigationController?.navigationBar else { return }
-//        navigationBar.prefersLargeTitles = true
-//        let secondaryTextColor = UIColor(named: "secondaryTextColor")
-//        navigationBar.titleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
-//        navigationBar.largeTitleTextAttributes = [.foregroundColor: secondaryTextColor ?? .systemOrange]
 //
-//        // Create and configure the title label
-//        let titleLabel = UILabel()
-//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        var firstName = " "
-//        if let displayName = user?.displayName {
-//            firstName = String(displayName.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true).first ?? "")
+//struct Test: View {
+//    var body: some View {
+//        Chart {
+//            ForEach(storage) { item in
+//                BarMark(
+//                    x: .value("Name", item.value),
+//                    y: .value("Storage", item.type),
+//                    stacking: .center)
+//                .foregroundStyle(by: .value("Name", item.name))
+//                .cornerRadius(10)
+////                .chartForegroundStyleScale(type: <#T##Charts.ScaleType?#>)
+//            }
 //        }
-//        titleLabel.text = "Hey, " + (firstName)
+//        .padding(.horizontal, 16)
+//        .frame(maxWidth: .infinity, minHeight: 35, maxHeight: 35)
+//        .background(Color.clear)
+//        .chartXAxis(.hidden)
+//        .chartYAxis(.hidden)
+//    }
+//}
+
 //
-//        // Create and configure the subtitle label
-//        let subtitleLabel = UILabel()
-//        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        subtitleLabel.text = user?.email
+//struct Storage: Identifiable {
+//    let id = UUID().uuidString
+//    let type: String = "Storage"
+//    let name: String
+//    let value: Int
 //
-//        // Add the profile picture and labels to the navigation bar
-//        navigationBar.addHomeProfilePic(userImage, titleLabel: titleLabel, subtitleLabel: subtitleLabel)
+//    init(name: String, value: Int) {
+//        self.name = name
+//        self.value = value
+//    }
+//}
+
+//var storage: [Storage] = [
+//    .init(name: "Photos", value: 40),
+//    .init(name: "Video", value: 30),
+//    .init(name: "Music", value: 20),
+//    .init(name: "Docs", value: 10)
+//]
+
+
 //
-//        // Create and configure the settings button
-//        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingsButtonTapped))
-//
-//        // Create and configure the refresh button
-//        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshButtonTapped))
-//
-//        // Add the buttons to the navigation bar
-//        navigationItem.rightBarButtonItems = [settingsButton, refreshButton]
-//    }poultry restaurant grocery
-let chartColors = ["1": UIColor(named: "chartColors/beige"),
-                   "poultry": UIColor(named: "brightRed"),
-                   "3": UIColor(named: "bronze"),
-                   "4": UIColor(named: "chartColors/deepBrown"),
-                   "grocery": UIColor(named: "forestGreen"),
-                   "6": UIColor(named: "chartColors/navyBlue"),
-                   "7": UIColor(named: "paleYellow"),
-                   "33": UIColor(named: "seafoamGreen"),
-                   "333": UIColor(named: "sepia"),
-                   "22": UIColor(named: "chartColors/sienna"),
-                   "222": UIColor(named: "slateBlue"),
-                   "11": UIColor(named: "chartColors/stoneGrey"),
-                   "restaurant": UIColor(named: "yellow")]
-
-
-struct Test: View {
-    var body: some View {
-        Chart {
-            ForEach(storage) { item in
-                BarMark(
-                    x: .value("Name", item.value),
-                    y: .value("Storage", item.type),
-                    stacking: .center)
-                .foregroundStyle(by: .value("Name", item.name))
-                .cornerRadius(10)
-//                .chartForegroundStyleScale(type: <#T##Charts.ScaleType?#>)
-            }
-        }
-        .padding(.horizontal, 16)
-        .frame(maxWidth: .infinity, minHeight: 35, maxHeight: 35)
-        .background(Color.clear)
-        .chartXAxis(.hidden)
-        .chartYAxis(.hidden)
-    }
-}
-
-
-struct Storage: Identifiable {
-    let id = UUID().uuidString
-    let type: String = "Storage"
-    let name: String
-    let value: Int
-    
-    init(name: String, value: Int) {
-        self.name = name
-        self.value = value
-    }
-}
-
-var storage: [Storage] = [
-    .init(name: "Photos", value: 40),
-    .init(name: "Video", value: 30),
-    .init(name: "Music", value: 20),
-    .init(name: "Docs", value: 10)
-]
-
-
-
-struct CellModel: Decodable {
-    let title: String
-    let subtitle: String
-}
+//struct CellModel: Decodable {
+//    let title: String
+//    let subtitle: String
+//}
