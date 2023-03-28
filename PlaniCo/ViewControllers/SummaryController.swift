@@ -97,21 +97,21 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         guard let userID = Auth.auth().currentUser?.uid else {
             fatalError("Unable to get current user ID")
         }
-        return URL(string: "http://127.0.0.1:8001/current_month_brief_summary/\(userID)")!
+        return URL(string: "https://thesis-backend-production.up.railway.app/current_month_brief_summary/\(userID)")!
     }
     
     var set_anticipated_url: URL {
         guard let userID = Auth.auth().currentUser?.uid else {
             fatalError("Unable to get current user ID")
         }
-        return URL(string: "http://127.0.0.1:8001/post_anticipated/\(userID)")!
+        return URL(string: "https://thesis-backend-production.up.railway.app/post_anticipated/\(userID)")!
     }
     
     var set_income_url: URL {
         guard let userID = Auth.auth().currentUser?.uid else {
             fatalError("Unable to get current user ID")
         }
-        return URL(string: "http://127.0.0.1:8001/set_income/\(userID)")!
+        return URL(string: "https://thesis-backend-production.up.railway.app/set_income/\(userID)")!
     }
 //
 //    let url = URL(string: "http://localhost:8001/post_anticipated/\(self.userID)/\(anticipated)")!
@@ -176,7 +176,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             
             alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
                 // Handle adding new spending here
-                if let anticipatedString = alert.textFields?[0].text,
+                if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                    let anticipated = Float(anticipatedString) {
                     
 //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
@@ -271,7 +271,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
             // Handle adding new spending here
-            if let anticipatedString = alert.textFields?[0].text,
+            if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                let anticipated = Float(anticipatedString) {
                 
 //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
@@ -381,6 +381,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     var totalSpent = 0.0
     var totalAnticipated = 0.0
     var totalLeft = 0.01
+    var totalIncome = 0.0
     
     
     func configureScrollStack(){
@@ -456,6 +457,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                     self.totalLeft = jsonData.totalLeft
                     self.totalSpent = jsonData.totalSpent
                     self.totalAnticipated = jsonData.totalAnticipated
+                    self.totalIncome = jsonData.totalIncome
                     self.yourBalanceLabel.removeFromSuperview()
                     self.sumLabel.removeFromSuperview()
                     self.spentSumLabel.removeFromSuperview()
@@ -463,8 +465,74 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                     self.createBalanceView()
                     self.createChartSummary()
                     
+                    
+                    if self.totalIncome == 0 {
+                        let alert = UIAlertController(title: "New Income", message: "As it is the start of new month, for the record, please add new income.", preferredStyle: .alert)
+                        
+                        alert.addTextField { (textField) in
+                            textField.keyboardType = .decimalPad
+                            textField.placeholder = "Enter Income"
+                        }
+                        
+                //        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+                            // Handle adding new spending here
+                            if let incomeString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
+                               let income = Float(incomeString) {
+                                
+                //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
+                                var request = URLRequest(url: self.set_income_url)
+                                request.httpMethod = "POST"
+                                let jsonBody: [String: Any] = ["income": income]
+                                let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody)
+                                request.httpBody = jsonData
+                                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+                                
+                                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let error = error {
+                                        // Handle error here
+                                        DispatchQueue.main.async {
+                                            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            self.present(alert, animated: true, completion: nil)
+                                        }
+                                        return
+                                    }
+                                    
+                                    guard let httpResponse = response as? HTTPURLResponse,
+                                          (200...299).contains(httpResponse.statusCode) else {
+                                        // Handle invalid response here
+                                        DispatchQueue.main.async {
+                                            let alert = UIAlertController(title: "Error", message: "Invalid response from server", preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            self.present(alert, animated: true, completion: nil)
+                                        }
+                                        return
+                                    }
+                                    
+                                    // Handle successful response here
+                                    DispatchQueue.main.async {
+                                        let alert = UIAlertController(title: "Success", message: "Income added successfully", preferredStyle: .alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self.present(alert, animated: true, completion: nil)
+                                    }
+                                }
+
+                                task.resume()
+
+                                
+                                task.resume()
+                            }
+
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
                     if self.totalAnticipated == 0 {
-                        let alert = UIAlertController(title: "New Anticipated", message: "As it is the start of new month, for a etter experiance, please input the sum you want to spend this month. \nPlease note that you can add only once a month and you will not be able to edit it", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "New Anticipated", message: "As it is the start of new month, for a better experiance, please input the sum you want to spend this month. \nPlease note that you can add only once a month and you will not be able to edit it", preferredStyle: .alert)
                         
                         // Add a text field for the anticipated spending input
                         alert.addTextField { (textField) in
@@ -476,7 +544,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                         
                         alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
                             // Handle adding new spending here
-                            if let anticipatedString = alert.textFields?[0].text,
+                            if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                                let anticipated = Float(anticipatedString) {
                                 
             //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
@@ -530,6 +598,12 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                 }
             } catch {
                 print("Error decoding JSON: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Success", message: "Income added successfully", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
             }
         }
         task.resume()
@@ -993,4 +1067,5 @@ struct monthSummary: Decodable{
     let totalSpent: Double
     let totalLeft: Double
     let totalAnticipated: Double
+    let totalIncome: Double
 }

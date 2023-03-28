@@ -33,43 +33,15 @@ import SwiftUI
 //        print(path)
         return companies
     }
-//    private static func loadCompanies() -> [[String: Any]]? {
-//        print("2")
-//
-//        guard let filePath = Bundle.main.path(forResource: "companies", ofType: "json"),
-//              let jsonData = FileManager.default.contents(atPath: filePath) else {
-//                print("Error loading companies.json: file not found")
-//                return nil
-//        }
-//
-//        do {
-//            let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-//            guard let companies = json?["companies"] as? [[String: Any]] else {
-//                print("Error loading companies.json: invalid JSON format")
-//                return nil
-//            }
-//            print(jsonData)
-//            return companies
-//        } catch {
-//            print("Error loading companies.json: \(error.localizedDescription)")
-//            return nil
-//        }
-//    }
-
-
-
 
     
     @objc private static func updateFields( ) {
         if let loadedCompanies = loadCompanies() {
-//            print("1")
             companies = loadedCompanies
         }
-//        print("4")
         let textField = ReceiptAlert.alertController?.textFields?[3]
         let companyName = textField?.text
         for company in companies {
-//            print("3")
             if company["company_name"] as? String == companyName {
                 if let legalName = company["company_legal_name"] {
                     let textField = ReceiptAlert.alertController?.textFields?[1]
@@ -190,7 +162,7 @@ import SwiftUI
             let companyName1 = alertController?.textFields?[3].text ?? ""
             let companyType1 = alertController?.textFields?[5].text ?? ""
             let category1 = alertController?.textFields?[7].text ?? ""
-            let purchaseTotal1 = alertController?.textFields?[9].text ?? ""
+            let purchaseTotal1 = alertController?.textFields?[9].text?.replacingOccurrences(of: ",", with: ".") ?? "" 
             let purchaseDateTime1 = alertController?.textFields?[11].text ?? ""
             
             guard let currentUser = Auth.auth().currentUser else { return }

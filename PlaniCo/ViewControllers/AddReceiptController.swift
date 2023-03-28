@@ -1,68 +1,12 @@
-////
-////  AddReceiptController.swift
-////  PlaniCo
-////
-////  Created by Sandu Furdui on 22.02.2023.
-////
 //
-import SwiftUI
-import FirebaseAuth
-////
-////
-////class LoadingState: ObservableObject {
-////    @Published var isLoading = false
-////}
-////
-////struct AddReceiptControllerWrapper: UIViewControllerRepresentable {
-////    func makeUIViewController(context: Context) -> UINavigationController {
-////        let navController = UINavigationController(rootViewController: AddReceiptController())
-////        navController.view.backgroundColor = .systemBackground
-////        return navController
-////    }
-////
-////    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
-////}
-////
-////
-////struct AddReceiptView: View {
-////    @ObservedObject var loadingState = LoadingState()
-////    var body: some View {
-////        ZStack {
-////            AddReceiptControllerWrapper()
-////                .opacity(loadingState.isLoading ? 0.5 : 1.0) // add opacity to the controller view
-////                .ignoresSafeArea()
-////                .overlay(
-////                    loadingState.isLoading ? ProgressView()
-////                        .progressViewStyle(CircularProgressViewStyle())
-////                        .background(Color.red) : nil
-////
-////
-////                )
-////        }
-////    }
-////}
-////
-////
+//  AddReceiptController.swift
+//  PlaniCo
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+//  Created by Sandu Furdui on 22.02.2023.
 //
 
+import SwiftUI
+import FirebaseAuth
 
 
 class AddReceiptController: UIViewController {
@@ -79,15 +23,6 @@ class AddReceiptController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func loadView() {
-//        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-//        let label = UILabel()
-////        label.text = "fuck u 2"
-////        label.textAlignment = .center
-////        tableView.backgroundView = label
-//        view = tableView
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
@@ -102,11 +37,7 @@ class AddReceiptController: UIViewController {
         navigationBar.titleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
         navigationBar.largeTitleTextAttributes = [.foregroundColor: accentColor ?? .systemOrange]
     }
-    
-    //    private func configureScanButton() {
-    //        let scanButton = UIBarButtonItem(title: "Scan", style: .plain, target: self, action: #selector(scanButtonTapped))
-    //        navigationItem.rightBarButtonItem = scanButton
-    //    }
+     
     private func configureScanButton() {
         let buttonWidth: CGFloat = 200
         let buttonHeight: CGFloat = 50
@@ -123,12 +54,7 @@ class AddReceiptController: UIViewController {
         let screenHeight = UIScreen.main.bounds.size.height
         scanButton.frame = CGRect(x: (view.bounds.width - buttonWidth) / 2, y: screenHeight/2 + screenHeight/4, width: buttonWidth, height: buttonHeight)
     }
-
-    
-    
-    
-    
-    
+ 
     private func dismissScannerView() {
         self.showScanner = false
         dismiss(animated: true, completion: nil)
