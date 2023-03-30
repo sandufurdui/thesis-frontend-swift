@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return navController
     }() 
     lazy var summaryController: UINavigationController = {
-        let navController = UINavigationController(rootViewController: anotherTest())
+        let navController = UINavigationController(rootViewController: SummaryController())
         
         navController.view.backgroundColor = accentColor
         return navController
@@ -107,8 +107,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            userNavController.setBarBackgroundColor(.red)
             tabBarController.viewControllers = [
                 
-//                summaryController,
-                TestController,
+                summaryController,
+//                TestController,
                 addReceiptController,
                 historyViewController,
                 userNavController
@@ -121,3 +121,59 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
 }
+
+
+//class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+//
+//
+//    lazy var summaryController: UINavigationController = {
+//        let navController = UINavigationController(rootViewController: SummaryController())
+//
+//        navController.view.backgroundColor = accentColor
+//        return navController
+//    }()
+//
+//    lazy var userNavController: UINavigationController = {
+//        let navController = UINavigationController(rootViewController: UserViewController())
+//        navController.view.backgroundColor = accentColor
+//        return navController
+//    }()
+//
+//    lazy var tabBarController: UITabBarController = {
+//        let tabBarController = UITabBarController()
+//        tabBarController.delegate = tabBarController
+//        tabBarController.view.backgroundColor = accentColor
+//        return tabBarController
+//    }()
+//
+//    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+//               options connectionOptions: UIScene.ConnectionOptions) {
+//
+//    }
+//
+//    // MARK: - Private Helpers
+//
+//        private func configureControllers() {
+//
+//            userNavController.configureTabBar(title: "Utilizator curent", systemImageName: "person.fill")
+////            tabBarController.viewControllers = [authNavController, homeNavController, userNavController]
+//        }
+//
+//    private func updateNavBar(for user: User?) {
+//
+//        if let _ = user {
+//            // User is logged in
+////            userNavController.setBarBackgroundColor(.red)
+//            tabBarController.viewControllers = [
+//
+//                summaryController,
+//                userNavController
+//            ]
+//        } else {
+//            // User is logged out
+//            tabBarController.viewControllers = [authNavController]
+//        }
+//    }
+//
+//
+//}

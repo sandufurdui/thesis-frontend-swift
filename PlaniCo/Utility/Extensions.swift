@@ -41,12 +41,12 @@ extension User: DataSourceProvidable {
             Item(title: isEmailVerified ? "Da" : "Nu", detailTitle: "E-mailul este verificat?")]
         return Section(headerDescription: "Altele", items: otherRows)
     }
-    
+     
     private var actionSection: Section {
         let actionsRows = [
             Item(title: UserAction.refreshUserInfo.rawValue, textColor: .systemBlue),
             Item(title: UserAction.requestVerifyEmail.rawValue, textColor: .systemBlue),
-            Item(title: UserAction.signOut.rawValue, textColor: .systemBlue),
+            Item(title: UserAction.signOut.rawValue, textColor: .systemOrange),
             //      Item(title: UserAction.tokenRefresh.rawValue, textColor: .systemBlue),
             //      Item(title: UserAction.delete.rawValue, textColor: .systemRed),
         ]

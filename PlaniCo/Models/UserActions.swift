@@ -18,3 +18,13 @@ enum UserAction: String {
     case updatePassword = "Numar de telefon"
     case refreshUserInfo = "Reîmprospătează informațiile"
 }
+
+enum SimplifiedUserAction: String {
+    case signOut = "Ieșire"
+    case requestVerifyEmail = "Solicitați verificarea e-mailului" 
+    case updateEmail = "Emaillllll"
+    case updatePhotoURL = "Adresa URL a fotografiei"
+    case updateDisplayName = "Numele de afișare"
+    case updatePassword = "Numar de telefon"
+    case refreshUserInfo = "Reîmprospătează informațiile"
+}

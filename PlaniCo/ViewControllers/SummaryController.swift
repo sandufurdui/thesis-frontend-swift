@@ -13,7 +13,11 @@ import Charts
 class SummaryController: UIViewController , UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mySection.items.count
+        if mySection.items.isEmpty{
+            return 1
+        } else {
+            return mySection.items.count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -22,68 +26,84 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     
     @objc func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        let item = mySection.items[indexPath.row]
-        
-        // Add icon and rounded square background
-        let iconImageView = UIImageView(frame: CGRect(x: 24, y: 8, width: 32, height: 32))
-        iconImageView.contentMode = .scaleAspectFit
-        iconImageView.image = UIImage(named: item.category!.lowercased())
-        iconImageView.layer.cornerCurve = .continuous
-        iconImageView.clipsToBounds = true
-        cell.contentView.addSubview(iconImageView)
-        
-        let iconBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        var iconBackgroundColor: UIColor?
-        if let color = chartColorsUIKit[item.category!.lowercased()] {
-            iconBackgroundColor = color
+        //        print(cell)
+        if recentTransactions.isEmpty {
+            let noRecordsLabel = UILabel(frame: cell.contentView.bounds)
+            noRecordsLabel.text = "No records found"
+            noRecordsLabel.textAlignment = .center
+            noRecordsLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            noRecordsLabel.center = cell.contentView.center
+            cell.contentView.addSubview(noRecordsLabel)
+            
+            cell.backgroundColor = boxBackgroundColor
+            return cell
+            
         } else {
-            iconBackgroundColor = categoryIconColor // fallback color if category is not found in chartColors
+            
+            let item = mySection.items[indexPath.row]
+            //            print(item)
+            // Add icon and rounded square background
+            let iconImageView = UIImageView(frame: CGRect(x: 24, y: 8, width: 32, height: 32))
+            iconImageView.contentMode = .scaleAspectFit
+            iconImageView.image = UIImage(named: item.category!.lowercased())
+            iconImageView.layer.cornerCurve = .continuous
+            iconImageView.clipsToBounds = true
+            cell.contentView.addSubview(iconImageView)
+            
+            let iconBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+            var iconBackgroundColor: UIColor?
+            if let color = chartColorsUIKit[item.category!.lowercased()] {
+                iconBackgroundColor = color
+            } else {
+                iconBackgroundColor = categoryIconColor // fallback color if category is not found in chartColors
+            }
+            iconBackgroundView.backgroundColor = iconBackgroundColor
+            iconBackgroundView.layer.cornerRadius = 15
+            iconBackgroundView.layer.cornerCurve = .continuous
+            iconBackgroundView.center = iconImageView.center
+            cell.contentView.addSubview(iconBackgroundView)
+            
+            let titleLabel = UILabel(frame: CGRect(x: 72, y: 0, width: tableView.frame.width - 120, height: 24))
+            titleLabel.text = item.title
+            titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+            titleLabel.textColor = reversedBackgroundColorSet
+            cell.contentView.addSubview(titleLabel)
+            
+            let detailLabel = UILabel(frame: CGRect(x: 72, y: 24, width: tableView.frame.width - 120, height: 20))
+            detailLabel.text = item.category
+            detailLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+            detailLabel.textColor = .gray
+            cell.contentView.addSubview(detailLabel)
+            
+            // Show only the first 2 words of the date time string
+            let words = item.purchase_date_time!.components(separatedBy: .whitespaces)
+            let truncatedDate = words.prefix(2).joined(separator: " ")
+            
+            let dateLabel = UILabel(frame: CGRect(x: 0, y: 24, width: 0, height: 20))
+            dateLabel.text = truncatedDate
+            dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+            dateLabel.textColor = .gray
+            dateLabel.sizeToFit()
+            let dateLabelXPosition = tableView.frame.width - dateLabel.frame.width - 16  // 16 is the right padding
+            dateLabel.frame.origin.x = dateLabelXPosition
+            cell.contentView.addSubview(dateLabel)
+            
+            let amountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 84, height: 24))
+            amountLabel.text = item.amount
+            amountLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
+            amountLabel.textColor = reversedBackgroundColorSet
+            amountLabel.textAlignment = .right
+            let amountLabelXPosition = tableView.frame.width - amountLabel.frame.width - 16 // 16 is the right padding
+            amountLabel.frame.origin.x = amountLabelXPosition
+            cell.contentView.addSubview(amountLabel)
+            
+            cell.contentView.addSubview(iconBackgroundView)
+            cell.contentView.addSubview(iconImageView)
+            cell.contentView.bringSubviewToFront(iconImageView)
+            cell.backgroundColor = item.backgroundColor ?? boxBackgroundColor
+            return cell
         }
-        iconBackgroundView.backgroundColor = iconBackgroundColor
-        iconBackgroundView.layer.cornerRadius = 15
-        iconBackgroundView.layer.cornerCurve = .continuous
-        iconBackgroundView.center = iconImageView.center
-        cell.contentView.addSubview(iconBackgroundView)
-        
-        let titleLabel = UILabel(frame: CGRect(x: 72, y: 0, width: tableView.frame.width - 120, height: 24))
-        titleLabel.text = item.title
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        titleLabel.textColor = reversedBackgroundColorSet
-        cell.contentView.addSubview(titleLabel)
-        
-        let detailLabel = UILabel(frame: CGRect(x: 72, y: 24, width: tableView.frame.width - 120, height: 20))
-        detailLabel.text = item.category
-        detailLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        detailLabel.textColor = .gray
-        cell.contentView.addSubview(detailLabel)
-        
-        // Show only the first 2 words of the date time string
-        let words = item.purchase_date_time!.components(separatedBy: .whitespaces)
-        let truncatedDate = words.prefix(2).joined(separator: " ")
-        
-        let dateLabel = UILabel(frame: CGRect(x: 0, y: 24, width: 0, height: 20))
-        dateLabel.text = truncatedDate
-        dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        dateLabel.textColor = .gray
-        dateLabel.sizeToFit()
-        let dateLabelXPosition = tableView.frame.width - dateLabel.frame.width - 16  // 16 is the right padding
-        dateLabel.frame.origin.x = dateLabelXPosition
-        cell.contentView.addSubview(dateLabel)
-        
-        let amountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 84, height: 24))
-        amountLabel.text = item.amount
-        amountLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
-        amountLabel.textColor = reversedBackgroundColorSet
-        amountLabel.textAlignment = .right
-        let amountLabelXPosition = tableView.frame.width - amountLabel.frame.width - 16 // 16 is the right padding
-        amountLabel.frame.origin.x = amountLabelXPosition
-        cell.contentView.addSubview(amountLabel)
-        
-        cell.contentView.addSubview(iconBackgroundView)
-        cell.contentView.addSubview(iconImageView)
-        cell.contentView.bringSubviewToFront(iconImageView)
-        cell.backgroundColor = item.backgroundColor ?? boxBackgroundColor
-        return cell
+        //        return cell
     }
     
     var current_month_transactions_url: URL {
@@ -113,8 +133,8 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         }
         return URL(string: "https://thesis-backend-production.up.railway.app/set_income/\(userID)")!
     }
-//
-//    let url = URL(string: "http://localhost:8001/post_anticipated/\(self.userID)/\(anticipated)")!
+    //
+    //    let url = URL(string: "http://localhost:8001/post_anticipated/\(self.userID)/\(anticipated)")!
     
     let secondaryTextColor = UIColor(named: "SecondaryTextColor")
     let categoryIconColor = UIColor(named: "categoryIconColor")
@@ -162,7 +182,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     }
     
     @objc private func addAnticipatedTapped() {
-        print("refreshButtonTapped tapped")
+        //        print("refreshButtonTapped tapped")
         if totalAnticipated == 0 {
             let alert = UIAlertController(title: "Add Anticipated", message: "Please input the sum you want to spend this month. \nPlease note that you can add only once a month and you will not be able to edit it ", preferredStyle: .alert)
             
@@ -179,14 +199,14 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                 if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                    let anticipated = Float(anticipatedString) {
                     
-//                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
+                    //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
                     var request = URLRequest(url: self.set_anticipated_url)
                     request.httpMethod = "POST"
                     let jsonBody: [String: Any] = ["totalAnticipated": anticipated]
                     let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody)
                     request.httpBody = jsonData
                     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
- 
+                    
                     
                     let task = URLSession.shared.dataTask(with: request) { data, response, error in
                         if let error = error {
@@ -217,13 +237,13 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
-
+                    
                     task.resume()
-
+                    
                     
                     task.resume()
                 }
-
+                
             }))
             present(alert, animated: true, completion: nil)
         } else {
@@ -233,7 +253,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         }
     }
     @objc private func addSpendingTapped() {
-        print("refreshButtonTapped tapped")
+        //        print("refreshButtonTapped tapped")
         
         let alert = UIAlertController(title: "Add Spending", message: "Do you want to add a new spending?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -244,20 +264,20 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     }
     
     @objc private func settingsButtonTapped() {
-        print("settings tapped")
-        let alert = UIAlertController(title: "Settings", message: "will present settings :)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        let profileController = UserViewController() // Create an instance of the profile controller
+        profileController.modalPresentationStyle = .pageSheet // Set the presentation style of the profile controller
+        present(profileController, animated: true, completion: nil) // Present the profile controller
     }
+    
     
     
     @objc private func refreshButtonTapped() {
         refreshData()
     }
     
+    // MARK: addIncomeTapped
     @objc private func addIncomeTapped(income: Int) {
-        print("refreshButtonTapped tapped")
+        //        print("refreshButtonTapped tapped")
         let alert = UIAlertController(title: "Add income", message: "Please input the income you want to add.", preferredStyle: .alert)
         
         // Add a text field for the anticipated spending input
@@ -266,7 +286,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             textField.placeholder = "Enter Income"
         }
         
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        //        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
@@ -274,14 +294,14 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                let anticipated = Float(anticipatedString) {
                 
-//                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
+                //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
                 var request = URLRequest(url: self.set_income_url)
                 request.httpMethod = "POST"
                 let jsonBody: [String: Any] = ["income": anticipated]
                 let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody)
                 request.httpBody = jsonData
                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+                
                 
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     if let error = error {
@@ -312,13 +332,13 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                         self.present(alert, animated: true, completion: nil)
                     }
                 }
-
+                
                 task.resume()
-
+                
                 
                 task.resume()
             }
-
+            
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -331,6 +351,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         
         DispatchQueue.main.async{
             self.barChartView.view.removeFromSuperview()
+            self.operationsSeparator.removeFromSuperview()
             // Add the new bar chart view back to the view hierarchy
             self.barChartView = UIHostingController(rootView: BarChartSwiftUI(storageList: self.localStorageList))
             self.addChild(self.barChartView)
@@ -341,15 +362,16 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         }
     }
     
-    
+//    let refreshControl = UIRefreshControl()
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        print("refresh pulled")
+        //        print("refresh pulled")
         refreshData()
         DispatchQueue.main.async {
             // End the refreshing state of the control
             refreshControl.endRefreshing()
         }
     }
+    // MARK: viewDidLoad()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -364,6 +386,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         getCurrentMonthStats()
     }
     
+    // MARK: global vars
     
     var localStorageList = [Storage(name: "None", value: 100)]
     let scrollView = UIScrollView()
@@ -376,13 +399,15 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     let sumLabel = UILabel()
     let spentSumLabel = UILabel()
     let spentInLabel = UILabel()
+    let operationsSeparator = UIView()
     var barChartView = UIHostingController(rootView: BarChartSwiftUI(storageList: [Storage(name: "None", value: 100)]))
     var recentTransactions = [summaryItem]()
     var totalSpent = 0.0
     var totalAnticipated = 0.0
-    var totalLeft = 0.01
+    var totalLeft = 0.0
     var totalIncome = 0.0
     
+    // MARK: configureScrollStack()
     
     func configureScrollStack(){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -444,8 +469,8 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     }()
     
     
+    // MARK: getCurrentMonthStats()
     func getCurrentMonthStats(){
-//        activityIndicator2.startAnimating()
         let task = URLSession.shared.dataTask(with: current_month_brief_summary_url) { (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
@@ -453,11 +478,13 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             }
             do {
                 let jsonData = try JSONDecoder().decode(monthSummary.self, from: data )
+                //                print(jsonData)
                 DispatchQueue.main.async {
                     self.totalLeft = jsonData.totalLeft
                     self.totalSpent = jsonData.totalSpent
                     self.totalAnticipated = jsonData.totalAnticipated
                     self.totalIncome = jsonData.totalIncome
+                    //                    print(jsonData)
                     self.yourBalanceLabel.removeFromSuperview()
                     self.sumLabel.removeFromSuperview()
                     self.spentSumLabel.removeFromSuperview()
@@ -466,7 +493,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                     self.createChartSummary()
                     
                     
-                    if self.totalIncome == 0 {
+                    if self.totalIncome < 0 {
                         let alert = UIAlertController(title: "New Income", message: "As it is the start of new month, for the record, please add new income.", preferredStyle: .alert)
                         
                         alert.addTextField { (textField) in
@@ -474,7 +501,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                             textField.placeholder = "Enter Income"
                         }
                         
-                //        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        //        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                         
                         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                         alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
@@ -482,16 +509,17 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                             if let incomeString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                                let income = Float(incomeString) {
                                 
-                //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
+                                //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
                                 var request = URLRequest(url: self.set_income_url)
                                 request.httpMethod = "POST"
                                 let jsonBody: [String: Any] = ["income": income]
                                 let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody)
                                 request.httpBody = jsonData
                                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+                                
                                 
                                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                                    //                                    print(response)
                                     if let error = error {
                                         // Handle error here
                                         DispatchQueue.main.async {
@@ -520,18 +548,18 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                                         self.present(alert, animated: true, completion: nil)
                                     }
                                 }
-
+                                
                                 task.resume()
-
+                                
                                 
                                 task.resume()
                             }
-
+                            
                         }))
                         self.present(alert, animated: true, completion: nil)
                     }
                     
-                    if self.totalAnticipated == 0 {
+                    if self.totalAnticipated < 0 {
                         let alert = UIAlertController(title: "New Anticipated", message: "As it is the start of new month, for a better experiance, please input the sum you want to spend this month. \nPlease note that you can add only once a month and you will not be able to edit it", preferredStyle: .alert)
                         
                         // Add a text field for the anticipated spending input
@@ -547,14 +575,14 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                             if let anticipatedString = alert.textFields?[0].text?.replacingOccurrences(of: ",", with: "."),
                                let anticipated = Float(anticipatedString) {
                                 
-            //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
+                                //                    let url = URL(string: "http://127.0.0.1:8001/post_anticipated/\(self.userID)")!
                                 var request = URLRequest(url: self.set_anticipated_url)
                                 request.httpMethod = "POST"
                                 let jsonBody: [String: Any] = ["totalAnticipated": anticipated]
                                 let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody)
                                 request.httpBody = jsonData
                                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-             
+                                
                                 
                                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let error = error {
@@ -585,13 +613,13 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                                         self.present(alert, animated: true, completion: nil)
                                     }
                                 }
-
+                                
                                 task.resume()
-
+                                
                                 
                                 task.resume()
                             }
-
+                            
                         }))
                         self.present(alert, animated: true, completion: nil)
                     }
@@ -609,12 +637,34 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         task.resume()
     }
     
-    
+    // MARK: getTransactionsData()
     func getTransactionsData() {
         activityIndicator2.startAnimating()
-        let task = URLSession.shared.dataTask(with: current_month_transactions_url) { (data, response, error) in
+        //        let task = URLSession.shared.dataTask(with: current_month_transactions_url) { (data, response, error) in
+        //            guard let data = data, error == nil else {
+        //                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+        //                return
+        //            }
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 10.0
+        sessionConfig.timeoutIntervalForResource = 10.0
+        let session = URLSession(configuration: sessionConfig)
+        
+        let task = session.dataTask(with: current_month_transactions_url) { (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+                DispatchQueue.main.async {
+                    self.activityIndicator2.stopAnimating()
+//                    self.refreshControl.endRefreshing()
+//                    self.configureScrollStack.refreshControl?.endRefreshing()
+                    let alert = UIAlertController(title: "Error", message: "Failed to fetch data. Please try again later.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                    alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (_) in
+                        self.refreshData()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
                 return
             }
             do {
@@ -636,9 +686,10 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
                         storageDict[category] = amountValue
                     }
                 }
+                //                print(self.recentTransactions)
                 self.localStorageList = storageDict.map { Storage(name: $0.key, value: $0.value) }
                 self.localStorageList.sort(by: { $0.value > $1.value })
-
+                
                 DispatchQueue.main.async {
                     self.barChartView.view.removeFromSuperview()
                     // Add the new bar chart view back to the view hierarchy
@@ -659,11 +710,11 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     }
     
     
+    // MARK: configureTable()
     
     func configureTable(){
         chartSummaryStack.addSubview(myTableView)
         chartSummaryStack.addSubview(activityIndicator2)
-        //        activityIndicator2.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
         myTableView.backgroundColor = boxBackgroundColor
         myTableView.layer.cornerRadius = 15
@@ -684,7 +735,10 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             activityIndicator2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator2.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
+        chartSummaryStack.bringSubviewToFront(activityIndicator2)
+        chartSummaryStack.bringSubviewToFront(activityIndicator2)
+            chartSummaryStack.bringSubviewToFront(activityIndicator2)
+            chartSummaryStack.bringSubviewToFront(activityIndicator2)
         myTableView.dataSource = self
         myTableView.delegate = self
     }
@@ -700,7 +754,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     
     
     
-    
+    // MARK: createChartSummary()
     func createChartSummary() {
         chartSummaryStack.backgroundColor = boxBackgroundColor
         chartSummaryStack.layer.cornerRadius = 15
@@ -710,7 +764,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         label.text = "Operations"
         label.textColor = reversedBackgroundColorSet
         label.font = UIFont.systemFont(ofSize: view.frame.height / 50, weight: .medium)
-        print(view.frame.height / 50)
+        //        print(view.frame.height / 50)
         chartSummaryStack.addSubview(label)
         
         spentSumLabel.text = "\(totalSpent) lei"
@@ -718,7 +772,11 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         spentSumLabel.font = UIFont.systemFont(ofSize: view.frame.height / 35, weight: .medium)
         chartSummaryStack.addSubview(spentSumLabel)
         
-        spentInLabel.text = "spent in March"
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "MMMM"
+        let currentMonth = dateFormatter.string(from: Date())
+        spentInLabel.text = "spent in \(currentMonth)"
         spentInLabel.textColor = secondaryTextColor
         spentInLabel.font = UIFont.systemFont(ofSize: view.frame.height / 60, weight: .medium)
         chartSummaryStack.addSubview(spentInLabel)
@@ -727,7 +785,6 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         chartSummaryStack.layer.cornerRadius = 15
         chartSummaryStack.layer.cornerCurve = .continuous
         
-        let operationsSeparator = UIView()
         operationsSeparator.backgroundColor = separatorColor
         chartSummaryStack.addSubview(operationsSeparator)
         chartSummaryStack.addSubview(testChartView)
@@ -744,7 +801,6 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         testChartView.translatesAutoresizingMaskIntoConstraints = false
         chartSummaryStack.translatesAutoresizingMaskIntoConstraints = false
         
-        var runtime_warning = ""
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: chartSummaryStack.leadingAnchor, constant: 16),
             label.topAnchor.constraint(equalTo: chartSummaryStack.topAnchor, constant: 24),
@@ -764,6 +820,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         
     }
     
+    // MARK: createHotButtons()
     func createHotButtons(){
         hotButtonsStack.backgroundColor = boxBackgroundColor
         hotButtonsStack.layer.cornerRadius = 15
@@ -782,7 +839,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         addIncomeButton.tintColor = reversedBackgroundColorSet
         let addIncomeLabel = UILabel()
         
-        addIncomeLabel.text = "Income"
+        addIncomeLabel.text = "Incomeee"
         addIncomeLabel.textColor = reversedBackgroundColorSet
         addIncomeLabel.font = UIFont.systemFont(ofSize: view.frame.height / 70)
         addIncomeLabel.textAlignment = .center
@@ -840,9 +897,6 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
             addAnticipatedLabel.trailingAnchor.constraint(equalTo: addAnticipatedButton.trailingAnchor)
         ])
         addAnticipatedButton.addTarget(self, action: #selector(addAnticipatedTapped), for: .touchUpInside)
-        
-        
-        
         
         let incomeLeftSeparator = UIView()
         incomeLeftSeparator.backgroundColor = separatorColor
@@ -912,9 +966,10 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         mainSeparator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainSeparator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         mainSeparator.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        mainSeparator.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height / 3).isActive = true
+        mainSeparator.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height / 3 - 2).isActive = true
     }
     
+    // MARK: configureNavigationBar()
     private func configureNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         navigationBar.prefersLargeTitles = true
@@ -966,13 +1021,13 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         ])
     }
     
-    
+    // MARK: createBalanceView()
     private func createBalanceView() {
         balanceView.translatesAutoresizingMaskIntoConstraints = false
         
         
         yourBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        if self.totalLeft > 0 {
+        if self.totalLeft >= 0 {
             yourBalanceLabel.text = "You can spend"
         } else {
             yourBalanceLabel.text = "You have exceeded your limit by"
@@ -983,7 +1038,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
         
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.text = "\(self.totalLeft) lei"
-        if self.totalLeft > 0 {
+        if self.totalLeft >= 0 {
             sumLabel.textColor = reversedBackgroundColorSet
         } else {
             sumLabel.textColor = .red
@@ -1005,7 +1060,7 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
     }
 }
 
- 
+// MARK: BarChartSwiftUI
 struct BarChartSwiftUI: View {
     @State private var storageList: [Storage]
     
@@ -1021,8 +1076,8 @@ struct BarChartSwiftUI: View {
                     y: .value("Storage", item.type),
                     stacking: .center)
                 .foregroundStyle(chartColors[item.name] ?? .blue)
-//                                .foregroundStyle(by: .value("Storage", item.type))
-                    .cornerRadius(10)
+                //                                .foregroundStyle(by: .value("Storage", item.type))
+                .cornerRadius(10)
             }
         }
         .padding(.horizontal, 16)
@@ -1032,6 +1087,8 @@ struct BarChartSwiftUI: View {
     }
 }
 
+
+// MARK: Models
 struct Storage: Identifiable {
     let id = UUID().uuidString
     let type: String = "Storage"
