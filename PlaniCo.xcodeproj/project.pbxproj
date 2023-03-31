@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		6FF046AE0BE9545667754F71 /* Pods_PlaniCo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057D320BD262432226996B7 /* Pods_PlaniCo.framework */; };
 		E600251129A7E12C003C91DC /* ReceiptAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E600251029A7E12C003C91DC /* ReceiptAlert.swift */; };
-		E618B05E29CE2FAC004DD05C /* tableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E618B05D29CE2FAC004DD05C /* tableCell.swift */; };
+		E61BDED829D75BC400FA9911 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61BDED729D75BC400FA9911 /* temp.swift */; };
+		E61BDEDA29D75C2400FA9911 /* ByCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61BDED929D75C2400FA9911 /* ByCategoryController.swift */; };
 		E62F38BE29A541230031A6B9 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38BD29A541230031A6B9 /* AuthViewController.swift */; };
 		E62F38C029A541C00031A6B9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38BF29A541C00031A6B9 /* LoginController.swift */; };
 		E62F38C229A541FF0031A6B9 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F38C129A541FF0031A6B9 /* UserViewController.swift */; };
@@ -45,7 +46,8 @@
 		42C8F0A1964D77D77297D0DC /* Pods-PlaniCo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlaniCo.debug.xcconfig"; path = "Target Support Files/Pods-PlaniCo/Pods-PlaniCo.debug.xcconfig"; sourceTree = "<group>"; };
 		A057D320BD262432226996B7 /* Pods_PlaniCo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlaniCo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E600251029A7E12C003C91DC /* ReceiptAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptAlert.swift; sourceTree = "<group>"; };
-		E618B05D29CE2FAC004DD05C /* tableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = tableCell.swift; path = ../../../../../.Trash/PlaniCo/Models/tableCell.swift; sourceTree = "<group>"; };
+		E61BDED729D75BC400FA9911 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
+		E61BDED929D75C2400FA9911 /* ByCategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByCategoryController.swift; sourceTree = "<group>"; };
 		E62F38BD29A541230031A6B9 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		E62F38BF29A541C00031A6B9 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		E62F38C129A541FF0031A6B9 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,8 @@
 				E64A059B29A56AA3005B8119 /* HistoryViewController.swift */,
 				E6C9DA6629A628ED00A1EE36 /* AddReceiptController.swift */,
 				E6CC18B729A950370008E59A /* SummaryController.swift */,
+				E61BDED729D75BC400FA9911 /* temp.swift */,
+				E61BDED929D75C2400FA9911 /* ByCategoryController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -141,7 +145,6 @@
 				E6C9DA6C29A6543E00A1EE36 /* Model.swift */,
 				E600251029A7E12C003C91DC /* ReceiptAlert.swift */,
 				E66FA5FB29CD127200939868 /* DorpdownMenu.swift */,
-				E618B05D29CE2FAC004DD05C /* tableCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -336,12 +339,13 @@
 				E62F38CA29A545320031A6B9 /* AuthProvider.swift in Sources */,
 				E62F38C229A541FF0031A6B9 /* UserViewController.swift in Sources */,
 				E6C9DA6B29A6540B00A1EE36 /* TextRecognition.swift in Sources */,
+				E61BDEDA29D75C2400FA9911 /* ByCategoryController.swift in Sources */,
 				E62F38CC29A5454E0031A6B9 /* UserActions.swift in Sources */,
+				E61BDED829D75BC400FA9911 /* temp.swift in Sources */,
 				E6C9DA6929A64AA300A1EE36 /* ScanerView.swift in Sources */,
 				E62F38CE29A545680031A6B9 /* Section.swift in Sources */,
 				E6FFCE0429A5322000B4A718 /* AppDelegate.swift in Sources */,
 				E6FFCE0629A5322000B4A718 /* SceneDelegate.swift in Sources */,
-				E618B05E29CE2FAC004DD05C /* tableCell.swift in Sources */,
 				E62F38C729A542B60031A6B9 /* LoginView.swift in Sources */,
 				E64A059C29A56AA3005B8119 /* HistoryViewController.swift in Sources */,
 				E66FA5FC29CD127200939868 /* DorpdownMenu.swift in Sources */,

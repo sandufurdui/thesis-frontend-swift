@@ -1063,11 +1063,11 @@ class SummaryController: UIViewController , UITableViewDelegate, UITableViewData
 // MARK: BarChartSwiftUI
 struct BarChartSwiftUI: View {
     @State private var storageList: [Storage]
-    
+
     init(storageList: [Storage]) {
         _storageList = State(initialValue: storageList)
     }
-    
+
     var body: some View {
         Chart {
             ForEach(storageList) { item in
@@ -1076,7 +1076,6 @@ struct BarChartSwiftUI: View {
                     y: .value("Storage", item.type),
                     stacking: .center)
                 .foregroundStyle(chartColors[item.name] ?? .blue)
-                //                                .foregroundStyle(by: .value("Storage", item.type))
                 .cornerRadius(10)
             }
         }
@@ -1086,7 +1085,6 @@ struct BarChartSwiftUI: View {
         .chartYAxis(.hidden)
     }
 }
-
 
 // MARK: Models
 struct Storage: Identifiable {
